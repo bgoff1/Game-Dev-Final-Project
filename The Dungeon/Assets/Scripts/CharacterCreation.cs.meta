@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 7d952912a60b66642bb21dbb3907dcf4
+timeCreated: 1520144031
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - characterHUD: {instanceID: 0}
+  - characterDisplay: {instanceID: 0}
+  - input: {instanceID: 0}
+  - maleSprite: {fileID: 21300000, guid: c9e1e17e46e7f8040832cff1b6669a93, type: 3}
+  - femaleSprite: {fileID: 21300000, guid: 8ea883f2182e6f54ca447211a0111d5c, type: 3}
+  - dwarfSprite: {fileID: 21300000, guid: e7a5b454888c2ee4e92aa0c10bf91ae6, type: 3}
+  - elfSprite: {fileID: 21300000, guid: 383d4d1a459b91449a4a73537c519308, type: 3}
+  - peasantSprite: {fileID: 21300000, guid: d7024198e6f290f4eb96583c890df207, type: 3}
+  - ruffianSprite: {fileID: 21300000, guid: 71bf7f3e0a8fc134e89838e218b53b64, type: 3}
+  - khalifateSprite: {fileID: 21300000, guid: 37f019d93ddbdd74d98e5e648f4eabf9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
