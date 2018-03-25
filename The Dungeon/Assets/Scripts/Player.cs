@@ -7,8 +7,6 @@ public class Player : Character {
 
     private bool alreadyRanAway = false;
     private int critChance = 5; //percent
-    private int currentHealth = 100;
-    //private int dodgeBlockChance = 0;
     private int experienceNeededMultiplier = 300;
     private int healthPotionHealAmount = 30;
     private int healthPotionDropChance = 35; //Percentage
@@ -23,13 +21,14 @@ public class Player : Character {
     private Slider experience;
     private Character recentlySlainEnemy;
 
+    public bool enemySlain = false;
+
     const float TIME_DELAY = 0.01f;
-    
 
     public void Awake()
     {
-        setUpUI();
         setUpVariables();
+        setUpUI();
     }
 
     public override void setUpUI()
@@ -69,10 +68,26 @@ public class Player : Character {
         healthPotionHealAmount += potionHealGain;
     }
 
+    public override void attack(Character c)
+    {
+        float startEnemyHP = c.health.value;
+        base.attack(c);
+        if (c.health.value >= 1 && Random.Range(0, 100) < critChance)
+        {
+            float damageTakenByEnemy = startEnemyHP - c.health.value;
+            c.health.value -= damageTakenByEnemy;
+            if (c.health.value < 1)
+            {
+                death(c);
+            }
+        }
+    }
+
     override public void death(Character c)
     {
         alreadyRanAway = false;
         recentlySlainEnemy = c;
+        enemySlain = true;
         gameText.text = c.charName + " was defeated! You gain " + enemyExperienceReward + " experience!";
         totalXP = experience.value + enemyExperienceReward;
         
@@ -91,7 +106,7 @@ public class Player : Character {
     {
         if (experience.value == experience.maxValue)
             levelUp();
-        if (Random.Range(0,100) < healthPotionDropChance)
+        if (Random.Range(0,100) < healthPotionDropChance && numHealthPotions < maxHealthPotions)
         {
             numHealthPotions++;
             gameText.text += "\nThe " + recentlySlainEnemy.charName + " dropped a health potion!";
@@ -101,6 +116,8 @@ public class Player : Character {
             gameText.text += "\nYou now have " + numHealthPotions + " " + hpnum + "!";
             updatePotionCount();
         }
+        Enemy enemy = gameObject.GetComponentInParent<Enemy>();
+        Destroy(enemy);
     }
 
     private void levelUp()

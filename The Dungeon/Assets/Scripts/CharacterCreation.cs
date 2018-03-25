@@ -10,6 +10,7 @@ public class CharacterCreation : MonoBehaviour
     public GameObject characterHUD;
     public GameObject characterDisplay;
     public GameObject input;
+    public GameObject caveBackground;
     public Sprite maleSprite;
     public Sprite femaleSprite;
 
@@ -43,12 +44,14 @@ public class CharacterCreation : MonoBehaviour
     private void setMaleCharacter()
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = maleSprite;
+        GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = maleSprite;
         getCharacterName();
     }
 
     private void setFemaleCharacter()
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = femaleSprite;
+        GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = femaleSprite;
         getCharacterName();
     }
 
@@ -64,9 +67,10 @@ public class CharacterCreation : MonoBehaviour
     private void getName()
     {
         gameObject.SetActive(false);
-        characterDisplay.SetActive(true);
+        caveBackground.SetActive(true);
+        //characterDisplay.SetActive(true);
         characterDisplay.GetComponentInChildren<Text>().text = input.GetComponent<InputField>().text.ToUpper();
-        characterHUD.SetActive(true);
+        // characterHUD.SetActive(true);
         input.SetActive(false);
     }
 }

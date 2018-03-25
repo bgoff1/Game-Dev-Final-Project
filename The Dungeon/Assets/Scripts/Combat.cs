@@ -107,13 +107,18 @@ public class Combat : MonoBehaviour {
     {
         if (enemy != null)
         {
-            print(enemy);
             player.attack(enemy);
+            // could change logic to move back to cave screen 
+            if (player.enemySlain)
+            {
+                enemy = null;
+                spawnEnemy();
+                player.enemySlain = false;
+            }
         }
         else
         {
             spawnEnemy();
-            print(enemy);
         }
     }
 
@@ -135,14 +140,11 @@ public class Combat : MonoBehaviour {
     private void spawnEnemy()
     {
         gEnemy.GetComponent<SpriteRenderer>().sprite = enemies[Random.Range(0, enemies.Length)];
-        print(enemy);
         if (enemy == null)
         {
             enemy = gameObject.AddComponent<Enemy>();
             enemy.setUp(gEnemy, enemyDisplay, loseScreen);
         }
-        //player.attack(enemy);
-        print(enemy);
     }
     
 }

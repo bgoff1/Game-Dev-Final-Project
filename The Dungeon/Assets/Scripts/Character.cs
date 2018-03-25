@@ -53,6 +53,7 @@ public abstract class Character : MonoBehaviour {
         c.health.value -= damageDealt;
 
         updateHealthText();
+        c.updateHealthText();
         if (c.health.value < 1)
         {
             death(c);
