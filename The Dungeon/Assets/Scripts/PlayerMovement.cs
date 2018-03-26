@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour {
         if (!Physics2D.OverlapBox(endPos, playerWidth, 0))
         {
             print("not there");
-            while (t < 1f)
+            while (t < 0.25f)
             {
                 t += Time.deltaTime * walkSpeed;
                 entity.position = Vector2.Lerp(startPos, endPos, t);
