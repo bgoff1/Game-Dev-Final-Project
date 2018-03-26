@@ -38,8 +38,9 @@ public class PlayerMovement : MonoBehaviour {
 
             if (input != Vector2.zero)
             {
-                playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
+                
                 StartCoroutine(Move(transform));
+                //playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
             }
         }
 	}

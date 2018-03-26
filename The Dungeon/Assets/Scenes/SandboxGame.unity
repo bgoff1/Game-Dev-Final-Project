@@ -1004,6 +1004,7 @@ GameObject:
   - component: {fileID: 472274118}
   - component: {fileID: 472274117}
   - component: {fileID: 472274121}
+  - component: {fileID: 472274122}
   m_Layer: 0
   m_Name: CaveCamera
   m_TagString: MainCamera
@@ -1068,7 +1069,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 472274116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -8, y: -11, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 890387724}
@@ -1091,6 +1092,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &472274122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 472274116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86fd6fbd6c58f3d4ab77eefd4897cd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1806337927}
 --- !u!1 &500048944
 GameObject:
   m_ObjectHideFlags: 0
