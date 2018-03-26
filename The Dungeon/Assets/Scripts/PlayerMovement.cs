@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour {
         isMoving = true;
         startPos = entity.position;
         t = 0;
-        print(entity.position);
+       // print(entity.position);
         endPos = new Vector2(startPos.x + System.Math.Sign(input.x), startPos.y + System.Math.Sign(input.y));
 
         if (!Physics2D.OverlapBox(endPos, playerWidth, 0))
@@ -61,13 +61,13 @@ public class PlayerMovement : MonoBehaviour {
             {
                 t += Time.deltaTime * walkSpeed;
                 entity.position = Vector2.Lerp(startPos, endPos, t);
-                print(entity.position);
+                //print(entity.position);
                 yield return null;
             }
         }
         else
         {
-            print(Physics2D.OverlapBoxAll(endPos, playerWidth, 0)[0].transform.position);
+           // print(Physics2D.OverlapBoxAll(endPos, playerWidth, 0)[0].transform.position);
             print("is there");
         }
         isMoving = false;
