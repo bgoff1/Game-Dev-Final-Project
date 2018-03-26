@@ -22,9 +22,6 @@ public class MainMenuButtonControl : MonoBehaviour {
 		mainMenuPanel.SetActive(true);
 		startButton.onClick.AddListener(showDifficulties);
 		sandboxButton.onClick.AddListener(startSandbox);
-		easyButton.onClick.AddListener(startEasy);
-		mediumButton.onClick.AddListener(startMedium);
-		hardButton.onClick.AddListener(startHard);
 		nightmareButton.onClick.AddListener(startNightmare);
 		infoButton.onClick.AddListener(showInfo);
 		backButton.onClick.AddListener(showDifficulties);
@@ -43,21 +40,6 @@ public class MainMenuButtonControl : MonoBehaviour {
 	private void startSandbox()
 	{
 		SceneManager.LoadScene("SandboxGame");
-	}
-
-	private void startEasy()
-	{
-		SceneManager.LoadScene("EasyGame");
-	}
-
-	private void startMedium()
-	{
-		SceneManager.LoadScene("MediumGame");
-	}
-
-	private void startHard()
-	{
-		SceneManager.LoadScene("HardGame");
 	}
 
 	private void startNightmare()
