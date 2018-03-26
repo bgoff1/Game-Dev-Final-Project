@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     void Start()
     {
         isAllowedToMove = true;
-        playerWidth = transform.GetComponent<BoxCollider2D>().size;
+        playerWidth = transform.localScale; //transform.GetComponent<BoxCollider2D>().size;
         playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
     }
 
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour {
         isMoving = true;
         startPos = entity.position;
         t = 0;
-
+        print(entity.position);
         endPos = new Vector2(startPos.x + System.Math.Sign(input.x), startPos.y + System.Math.Sign(input.y));
 
         if (!Physics2D.OverlapBox(endPos, playerWidth, 0))
@@ -59,7 +59,8 @@ public class PlayerMovement : MonoBehaviour {
             while (t < 1f)
             {
                 t += Time.deltaTime * walkSpeed;
-                entity.position = Vector3.Lerp(startPos, endPos, t);
+                entity.position = Vector2.Lerp(startPos, endPos, t);
+                print(entity.position);
                 yield return null;
             }
         }
