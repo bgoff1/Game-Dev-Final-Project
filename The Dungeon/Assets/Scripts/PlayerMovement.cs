@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         isAllowedToMove = true;
         playerWidth = transform.localScale; //transform.GetComponent<BoxCollider2D>().size;
+        //print(playerWidth);
         playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
     }
 
@@ -51,13 +52,29 @@ public class PlayerMovement : MonoBehaviour {
         isMoving = true;
         startPos = entity.position;
         t = 0;
+        float addY = 0, addX = 0;
+        if (input.x != 0)
+        {
+            if (System.Math.Sign(input.x) == 1)
+                addX = 0.1f;
+            else if (System.Math.Sign(input.x) == -1)
+                addX = -0.1f;
+        }
+        else if(input.y != 0)
+        {
+            if (System.Math.Sign(input.y) == 1)
+                addY = 0.1f;
+            else if (System.Math.Sign(input.y) == -1)
+                addY = -0.1f;
+        }
+         
        // print(entity.position);
-        endPos = new Vector2(startPos.x + System.Math.Sign(input.x), startPos.y + System.Math.Sign(input.y));
+        endPos = new Vector2(startPos.x + addX, startPos.y + addY);
 
         if (!Physics2D.OverlapBox(endPos, playerWidth, 0))
         {
             print("not there");
-            while (t < 0.25f)
+            while (t < 1f)
             {
                 t += Time.deltaTime * walkSpeed;
                 entity.position = Vector2.Lerp(startPos, endPos, t);
