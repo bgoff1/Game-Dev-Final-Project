@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     private Vector2 input;
     private Vector2 startPos;
     private Vector2 endPos;
+    private Vector2 characterEndPos;
 
     void Start()
     {
@@ -70,14 +71,14 @@ public class PlayerMovement : MonoBehaviour {
          
        // print(entity.position);
         endPos = new Vector2(startPos.x + addX, startPos.y + addY);
-
+        characterEndPos = new Vector2(startPos.x + System.Math.Sign(input.x), startPos.y + System.Math.Sign(input.y));
         if (!Physics2D.OverlapBox(endPos, playerWidth, 0))
         {
             print("not there");
-            while (t < 1f)
+            while (t < 0.25f)
             {
                 t += Time.deltaTime * walkSpeed;
-                entity.position = Vector2.Lerp(startPos, endPos, t);
+                entity.position = Vector2.Lerp(startPos, characterEndPos, t);
                 //print(entity.position);
                 yield return null;
             }
