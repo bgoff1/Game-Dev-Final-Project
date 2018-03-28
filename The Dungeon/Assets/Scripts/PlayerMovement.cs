@@ -6,49 +6,136 @@ public class PlayerMovement : MonoBehaviour {
     [Header("Set in Inspector")]
     public Camera playerCamera;
 	public Camera battleCamera;
-    /*public Sprite northSprite;
-    public Sprite eastSprite;
-    public Sprite southSprite;
-    public Sprite westSprite;*/
-    public float walkSpeed = 3f;
-
-    private bool isAllowedToMove;
+    //public float walkSpeed = 3f;
+    
     private bool isMoving = false;
-    private Direction currentDir;
-    private float t;
-    private Vector2 playerWidth;
-    private Vector2 input;
-    private Vector2 startPos;
-    private Vector2 endPos;
-    private Vector2 characterEndPos;
+    private Direction moveDirection;
+    //private Vector2 playerWidth;
+    private Vector3 endPos;
+
+    // how far the player goes on each movement
+    private const float MOVE_DISTANCE = 0.5f;
+    // how fast the player is moved from one block to the next
+        // i.e. how fast the movePlayer function is called
+    private const float MOVE_SPEED = 0.1f;
+    // how much the player is moved in each call of movePlayer
+    private const float MOVE_INCREMENT = 0.25f;
+    // how much time is waited before isMoving boolean is set
+        // back to false after moving. Makes moving rapidly less
+        // chaotic
+    private const float WAIT_INTERVAL = 0.15f;
 
     void Start()
     {
-        isAllowedToMove = true;
-        playerWidth = transform.localScale; //transform.GetComponent<BoxCollider2D>().size;
+        //playerWidth = transform.localScale; //transform.GetComponent<BoxCollider2D>().size;
         //print(playerWidth);
         playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
     }
 
 	void FixedUpdate () {
 
-        if (!isMoving && isAllowedToMove)
+        if (!isMoving)
         {
-            input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            {
+                moveDirection = Direction.North;
+                setEndPos();
+            }
+            else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            {
+                moveDirection = Direction.South;
+                setEndPos();
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            {
+                moveDirection = Direction.East;
+                setEndPos();
+            }
+            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            {
+                moveDirection = Direction.West;
+                setEndPos();
+            }
+            /*input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (Mathf.Abs(input.x) > Mathf.Abs(input.y)) { input.y = 0; }
             else { input.x = 0; }
 
             if (input != Vector2.zero)
             {
-                
                 StartCoroutine(Move(transform));
                 //playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
-            }
+            }*/
         }
 	}
 
+    private void setEndPos()
+    {
+        isMoving = true;
+        endPos = transform.position;
+        switch (moveDirection)
+        {
+            case Direction.North:
+                endPos.y += MOVE_DISTANCE;
+                break;
+            case Direction.South:
+                endPos.y -= MOVE_DISTANCE;
+                break;
+            case Direction.East:
+                endPos.x -= MOVE_DISTANCE;
+                break;
+            case Direction.West:
+                endPos.x += MOVE_DISTANCE;
+                break;
+        }
+        InvokeRepeating("movePlayer", 0.0f, MOVE_SPEED);
+    }
+
+    private void movePlayer()
+    {
+        Vector3 charPosition = transform.position;
+        if (!Physics2D.OverlapBox(endPos, transform.localScale, 0f))
+        {
+            if (charPosition != endPos)
+            {
+                switch (moveDirection)
+                {
+                    case Direction.North:
+                        charPosition.y += MOVE_INCREMENT;
+                        break;
+                    case Direction.South:
+                        charPosition.y -= MOVE_INCREMENT;
+                        break;
+                    case Direction.East:
+                        charPosition.x -= MOVE_INCREMENT;
+                        break;
+                    case Direction.West:
+                        charPosition.x += MOVE_INCREMENT;
+                        break;
+                }
+                transform.position = charPosition;
+                if (charPosition == endPos)
+                {
+                    //isMoving = false;
+                    CancelInvoke("movePlayer");
+                    Invoke("canMoveAgain", WAIT_INTERVAL);
+                }
+            }
+        }
+        else
+        {
+            isMoving = false;
+            print(Physics2D.OverlapBox(endPos, transform.localScale, 0f));
+            CancelInvoke("movePlayer");
+        }
+    }
+
+    private void canMoveAgain()
+    {
+        isMoving = false;
+    }
+
     // Move function from https://github.com/StormBurpee/Unity_Pokemon/blob/master/Assets/Scripts/Player/PlayerMovement.cs
-    public IEnumerator Move(Transform entity)
+    /*public IEnumerator Move(Transform entity)
     {
         isMoving = true;
         startPos = entity.position;
@@ -90,7 +177,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         isMoving = false;
         yield return 0;
-    }
+    }*/
 	
 	public void EnterBattle()
 	{
@@ -102,7 +189,7 @@ public class PlayerMovement : MonoBehaviour {
 enum Direction
 {
     North,
-    East,
     South,
+    East,
     West
 }
