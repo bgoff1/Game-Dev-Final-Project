@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour {
                 moveDirection = Direction.West;
                 startMovingPlayer();
             }
+            #region oldmovement
             /*input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (Mathf.Abs(input.x) > Mathf.Abs(input.y)) { input.y = 0; }
             else { input.x = 0; }
@@ -68,8 +69,9 @@ public class PlayerMovement : MonoBehaviour {
                 StartCoroutine(Move(transform));
                 //playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
             }*/
+            #endregion
         }
-	}
+    }
 
     private void startMovingPlayer()
     {
@@ -90,14 +92,6 @@ public class PlayerMovement : MonoBehaviour {
                 endPos.x += MOVE_DISTANCE;
                 break;
         }
-        if (Random.Range(0f,100f) > ENCOUNTER_CHANCE)
-        {
-            //logic for starting battle scene
-            //EnterBattle();
-            // is there more logic or is that it?
-                // i think that's it. just need to add to 
-                //  move back after defeating an enemy
-        }
         InvokeRepeating("movePlayer", 0.0f, MOVE_SPEED);
     }
 
@@ -108,27 +102,41 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (charPosition != endPos)
             {
-                switch (moveDirection)
+                // if theres an encounter
+                if (Random.Range(0f, 100f) < ENCOUNTER_CHANCE)
                 {
-                    case Direction.North:
-                        charPosition.y += MOVE_INCREMENT;
-                        break;
-                    case Direction.South:
-                        charPosition.y -= MOVE_INCREMENT;
-                        break;
-                    case Direction.East:
-                        charPosition.x -= MOVE_INCREMENT;
-                        break;
-                    case Direction.West:
-                        charPosition.x += MOVE_INCREMENT;
-                        break;
+                    //logic for starting battle scene
+                    enterBattle();
+                    // is there more logic or is that it?
+                    // i think that's it. just need to add to 
+                    //  move back after defeating an enemy
                 }
-                transform.position = charPosition;
-                if (charPosition == endPos)
+                // otherwise, set where the player is going to move to,
+                    // and start moving there
+                else
                 {
-                    //isMoving = false;
-                    CancelInvoke("movePlayer");
-                    Invoke("canMoveAgain", WAIT_INTERVAL);
+                    switch (moveDirection)
+                    {
+                        case Direction.North:
+                            charPosition.y += MOVE_INCREMENT;
+                            break;
+                        case Direction.South:
+                            charPosition.y -= MOVE_INCREMENT;
+                            break;
+                        case Direction.East:
+                            charPosition.x -= MOVE_INCREMENT;
+                            break;
+                        case Direction.West:
+                            charPosition.x += MOVE_INCREMENT;
+                            break;
+                    }
+                    transform.position = charPosition;
+                    if (charPosition == endPos)
+                    {
+                        //isMoving = false;
+                        CancelInvoke("movePlayer");
+                        Invoke("canMoveAgain", WAIT_INTERVAL);
+                    }
                 }
             }
         }
