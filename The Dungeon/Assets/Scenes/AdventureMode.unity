@@ -4841,6 +4841,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 472274119}
   battleCamera: {fileID: 883963988}
+  playerHUD: {fileID: 168347854}
+  playerDisplay: {fileID: 1780367754}
+  enemyDisplay: {fileID: 691891339}
 --- !u!1 &1852085475
 GameObject:
   m_ObjectHideFlags: 0

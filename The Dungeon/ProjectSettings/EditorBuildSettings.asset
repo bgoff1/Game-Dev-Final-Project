@@ -9,17 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 36b10e9943fd44c4da1ec073eef6038c
   - enabled: 1
-    path: Assets/Scenes/EasyGame.unity
-    guid: 3688e265424738d449cebfb55dc26238
+    path: Assets/Scenes/AdventureMode.unity
+    guid: 692d7d2bc9725f94a818b8d5e16f53ae
   - enabled: 1
-    path: Assets/Scenes/HardGame.unity
-    guid: 453062dc869d08349b001f2137094550
-  - enabled: 1
-    path: Assets/Scenes/MediumGame.unity
-    guid: ab15423914277624fb91526672472870
-  - enabled: 1
-    path: Assets/Scenes/NightmareGame.unity
-    guid: f4f041adb4c12da43b7f01d9eb6e735f
-  - enabled: 1
-    path: Assets/Scenes/SandboxGame.unity
-    guid: 8dd1dc6e4cff3f74eb46a6f98e9d340e
+    path: Assets/Scenes/EndlessMode.unity
+    guid: a34ef5f1dc54a014dab2f974b83ed7f4

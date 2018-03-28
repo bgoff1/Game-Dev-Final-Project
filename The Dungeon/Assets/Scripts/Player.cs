@@ -14,16 +14,16 @@ public class Player : Character {
     private int numHealthPotions = 3;
     private int potionHealGain = 10;
     private int runAwayChance = 25; //percent
-    
+    private Character recentlySlainEnemy;
     private float totalXP;
-    //private int currentExperience = 0;
     private int enemyExperienceReward = 100;
     private Slider experience;
-    private Character recentlySlainEnemy;
+    private Text gameText;
+    
 
+    private const float TIME_DELAY = 0.01f;
+    
     public bool enemySlain = false;
-
-    const float TIME_DELAY = 0.01f;
 
     public void Awake()
     {
@@ -34,8 +34,10 @@ public class Player : Character {
     public override void setUpUI()
     {
         #region Slider
-        gameText = GameObject.Find("GameText").GetComponent<Text>();
-        display = GameObject.Find("Player Display");
+        findGameText();
+        Transform canvas = transform.root;
+        Transform d = canvas.Find("Player Display");
+        GameObject display = d.gameObject;
         Slider[] sliders = display.GetComponentsInChildren<Slider>();
         foreach (Slider s in sliders)
         {
@@ -62,6 +64,14 @@ public class Player : Character {
         #endregion
     }
 
+    private void findGameText()
+    {
+        if (gameText == null)
+        {
+            gameText = GameObject.Find("GameText").GetComponent<Text>();
+        }
+    }
+
     override public void updateStats()
     {
         base.updateStats();
@@ -85,9 +95,13 @@ public class Player : Character {
 
     override public void death(Character c)
     {
+        findGameText();
         alreadyRanAway = false;
         recentlySlainEnemy = c;
         enemySlain = true;
+        print(enemyExperienceReward);
+        print(c.charName);
+        print(gameText.text);
         gameText.text = c.charName + " was defeated! You gain " + enemyExperienceReward + " experience!";
         totalXP = experience.value + enemyExperienceReward;
         

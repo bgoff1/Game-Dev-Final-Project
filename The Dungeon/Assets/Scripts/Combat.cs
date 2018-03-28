@@ -10,14 +10,14 @@ public class Combat : MonoBehaviour {
     static private Player player;
     private GameObject gEnemy;
     private Enemy enemy;
-	#region GameVariables
+	/*#region GameVariables
 	private int monsterLevels = 0;
 	private int monstersDefeated = 0;
     #endregion
 	#region SpellVariables
 	private int maxSpellSlots = 0;
 	private int currentSpellSlots = 0;
-	#endregion
+	#endregion*/
     #region Buttons
     private Button topLeft;
     private Button topRight;
@@ -47,8 +47,7 @@ public class Combat : MonoBehaviour {
         {
             player = gameObject.AddComponent<Player>();
         }
-
-        // Do fight logic here:
+        
         setupButtons();
         setUpMonsters();
         fight();
@@ -76,26 +75,10 @@ public class Combat : MonoBehaviour {
             }
         }
     }
-    
-    //public static double NextGaussianDouble(this Random r)
-    //{
-    //    double u, v, S;
-
-    //    do
-    //    {
-    //        u = 2.0 * Random.value - 1.0;
-    //        v = 2.0 * Random.value - 1.0;
-    //        S = u * u + v * v;
-    //    }
-    //    while (S >= 1.0);
-
-    //    double fac = Math.Sqrt(-2.0 * Math.Log(S) / S);
-    //    return u * fac;
-    //}
 
     private void fight()
     {
-        gameText.text = "";
+        gameText.text = " ";
         topLeft.GetComponentInChildren<Text>().text = "ATTACK";
         topLeft.onClick.AddListener(attack);
         topRight.GetComponentInChildren<Text>().text = "DRINK POTION";
