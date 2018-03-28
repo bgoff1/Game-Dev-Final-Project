@@ -24,6 +24,9 @@ public class PlayerMovement : MonoBehaviour {
         // back to false after moving. Makes moving rapidly less
         // chaotic
     private const float WAIT_INTERVAL = 0.15f;
+    // what percent chance to encounter an enemy
+        // chance out of 100 per move
+    private const int ENCOUNTER_CHANCE = 5;
 
     void Start()
     {
@@ -39,22 +42,22 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
                 moveDirection = Direction.North;
-                setEndPos();
+                startMovingPlayer();
             }
             else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
             {
                 moveDirection = Direction.South;
-                setEndPos();
+                startMovingPlayer();
             }
             else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
             {
                 moveDirection = Direction.East;
-                setEndPos();
+                startMovingPlayer();
             }
             else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
             {
                 moveDirection = Direction.West;
-                setEndPos();
+                startMovingPlayer();
             }
             /*input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (Mathf.Abs(input.x) > Mathf.Abs(input.y)) { input.y = 0; }
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 	}
 
-    private void setEndPos()
+    private void startMovingPlayer()
     {
         isMoving = true;
         endPos = transform.position;
@@ -86,6 +89,14 @@ public class PlayerMovement : MonoBehaviour {
             case Direction.West:
                 endPos.x += MOVE_DISTANCE;
                 break;
+        }
+        if (Random.Range(0f,100f) > ENCOUNTER_CHANCE)
+        {
+            //logic for starting battle scene
+            //EnterBattle();
+            // is there more logic or is that it?
+                // i think that's it. just need to add to 
+                //  move back after defeating an enemy
         }
         InvokeRepeating("movePlayer", 0.0f, MOVE_SPEED);
     }
@@ -178,8 +189,8 @@ public class PlayerMovement : MonoBehaviour {
         isMoving = false;
         yield return 0;
     }*/
-	
-	public void EnterBattle()
+
+    public void enterBattle()
 	{
 		playerCamera.gameObject.SetActive(false);
 		battleCamera.gameObject.SetActive(true);
