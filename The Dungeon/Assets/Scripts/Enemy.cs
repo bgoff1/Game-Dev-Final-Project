@@ -12,7 +12,7 @@ public class Enemy : Character {
         display = displayP;
         setUpVariables();
         setUpUI();
-        loseScreen = GameObject.Find("Lose Screen");
+        loseScreen = losescreen;
         display.SetActive(true);
         charName = display.GetComponentInChildren<Text>().text = enemy.GetComponent<SpriteRenderer>().sprite.name.ToUpper();
         updateHealthText();

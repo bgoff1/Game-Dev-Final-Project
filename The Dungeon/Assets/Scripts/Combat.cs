@@ -21,8 +21,6 @@ public class Combat : MonoBehaviour {
     #region Buttons
     private Button topLeft;
     private Button topRight;
-    private Button midLeft;
-    private Button midRight;
     #endregion
     #region Sliders
     /*private Slider playerHealth;
@@ -66,12 +64,12 @@ public class Combat : MonoBehaviour {
                 case "TopRight":
                     topRight = b;
                     break;
-                case "BotLeft":
+                /*case "BotLeft":
                     midLeft = b;
                     break;
                 case "BotRight":
                     midRight = b;
-                    break;
+                    break;*/
             }
         }
     }

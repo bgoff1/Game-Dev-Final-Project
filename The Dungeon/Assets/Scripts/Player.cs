@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class Player : Character {
 
     private bool alreadyRanAway = false;
+    private bool addingXP = false;
     private int critChance = 5; //percent
-    private int experienceNeededMultiplier = 300;
+    private int experienceNeededMultiplier = 3;
     private int healthPotionHealAmount = 30;
     private int healthPotionDropChance = 35; //Percentage
     private int maxHealthPotions = 5;
@@ -16,10 +17,8 @@ public class Player : Character {
     private int runAwayChance = 25; //percent
     private Character recentlySlainEnemy;
     private float totalXP;
-    private int enemyExperienceReward = 100;
-    private Slider experience;
-    private Text gameText;
-    
+    private int enemyExperienceReward = 1;
+    private Slider experience;    
 
     private const float TIME_DELAY = 0.01f;
     
@@ -48,9 +47,9 @@ public class Player : Character {
         }
         health.maxValue = maxHealth;
         health.value = health.maxValue;
-        int factor = (int)Mathf.Pow(2, level - 1);
-        int experienceNeeded = experienceNeededMultiplier * factor;
-        experience.maxValue = experienceNeeded;
+        //int factor = (int)Mathf.Pow(2, level - 1);
+        //int experienceNeeded = experienceNeededMultiplier * factor;
+        experience.maxValue = experienceNeededMultiplier;
         experience.value = 0;
         #endregion
         #region Text
@@ -82,14 +81,22 @@ public class Player : Character {
     {
         float startEnemyHP = c.health.value;
         base.attack(c);
+        // if the enemy is still alive and you critically hit
         if (c.health.value >= 1 && Random.Range(0, 100) < critChance)
         {
+            // deal double damage
             float damageTakenByEnemy = startEnemyHP - c.health.value;
             c.health.value -= damageTakenByEnemy;
+            // kill the enemy if its health is 0
             if (c.health.value < 1)
             {
                 death(c);
             }
+        }
+        // if your health is 0 then you die
+        if (health.value < 1)
+        {
+            c.death(this);
         }
     }
 
@@ -99,31 +106,36 @@ public class Player : Character {
         alreadyRanAway = false;
         recentlySlainEnemy = c;
         enemySlain = true;
-        print(enemyExperienceReward);
-        print(c.charName);
-        print(gameText.text);
-        gameText.text = c.charName + " was defeated! You gain " + enemyExperienceReward + " experience!";
+        gameText.text = c.charName + " was defeated! You gain " + enemyExperienceReward + 
+            " experience!";
         totalXP = experience.value + enemyExperienceReward;
         
-        InvokeRepeating("addExperience", 0f, TIME_DELAY);
-        if (!IsInvoking("addExperience"))
+        //InvokeRepeating("addExperience", 0f, TIME_DELAY);
+        addingXP = true;
+        /*while*/ if (addingXP)
+        {
+            Invoke("addExperience", TIME_DELAY);
+        }
+        /*if (!IsInvoking("addExperience"))
         {
             enemyDefeated();
         }
         else
-        {
+        {*/
             Invoke("enemyDefeated", TIME_DELAY * enemyExperienceReward);
-        }
+        //}
     }
 
     private void enemyDefeated()
     {
         if (experience.value == experience.maxValue)
             levelUp();
-        if (Random.Range(0,100) < healthPotionDropChance && numHealthPotions < maxHealthPotions)
+        if (Random.Range(0,100) < healthPotionDropChance && 
+            numHealthPotions < maxHealthPotions)
         {
             numHealthPotions++;
-            gameText.text += "\nThe " + recentlySlainEnemy.charName + " dropped a health potion!";
+            gameText.text += "\nThe " + recentlySlainEnemy.charName + 
+                " dropped a health potion!";
             string hpnum = "health potions";
             if (numHealthPotions == 1)
                 hpnum = "health potion";
@@ -154,14 +166,19 @@ public class Player : Character {
         int experienceNeeded = experienceNeededMultiplier * factor;
         experience.maxValue = experienceNeeded;
         // adds rollover xp
-        InvokeRepeating("addExperience", 0f, 0.01f);
+        if (totalXP != 0)
+            InvokeRepeating("addExperience", 0f, 0.01f);
 
         updateStats();
         updateHealthText();
         gameText.text += "\nYou leveled up to level " + level + "!";
-        gameText.text += "\nYou gained " + attackGrowth + " attack damage - you now have " + attackDamage + "!";
-        gameText.text += "\nYou gained " + healthGrowth + " health - you now have " + maxHealth + "!";
-        gameText.text += "\nYour health potions heal for " + potionHealGain + " more - they now heal for " + healthPotionHealAmount + "!";
+        gameText.text += "\nYou gained " + attackGrowth + 
+            " attack damage - you now have " + attackDamage + "!";
+        gameText.text += "\nYou gained " + healthGrowth + 
+            " health - you now have " + maxHealth + "!";
+        gameText.text += "\nYour health potions heal for " + 
+            potionHealGain + " more - they now heal for " + healthPotionHealAmount + 
+            "!";
 
     }
 
@@ -170,13 +187,14 @@ public class Player : Character {
         experience.value++;
         if (experience.value == totalXP || experience.value == experience.maxValue)
         {
-            CancelInvoke("addExperience");
+            addingXP = false;
         }
     }
 
     private void updatePotionCount()
     {
-        GameObject.Find("PotionCount").GetComponent<Text>().text = "POTIONS: " + numHealthPotions;
+        GameObject.Find("PotionCount").GetComponent<Text>().text = "POTIONS: " + 
+            numHealthPotions;
     }
 
     public void drinkPotion()
@@ -190,14 +208,15 @@ public class Player : Character {
         }
         else
         {
-            gameText.text = "You have no health potions, defeat enemies for a chance to get one";
+            gameText.text = "You have no health potions, defeat enemies for a " +
+                "chance to get one";
             gameText.text = gameText.text.ToUpper();
         }
     }
 
     private void runAway()
     {
-        if (Random.Range(0, 100) > runAwayChance && !alreadyRanAway) //should there be a variable that dictates the % chance you have to actually escape??
+        if (Random.Range(0, 100) > runAwayChance && !alreadyRanAway) 
         {
             gameText.text = "You got away successfully!";
             gameText.text = gameText.text.ToUpper();

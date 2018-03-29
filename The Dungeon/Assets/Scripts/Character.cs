@@ -16,7 +16,8 @@ public abstract class Character : MonoBehaviour {
     public Text gameText;
     public Text healthText;
 
-    private Character enemy;
+    private GameObject enemyIcon;
+    private GameObject playerIcon;
 
     virtual public void setUpVariables()
     {
@@ -45,7 +46,6 @@ public abstract class Character : MonoBehaviour {
 
     virtual public void attack(Character c)
     {
-        enemy = c;
         int damageDealt = Random.Range(0, attackDamage);
         int damageTaken = Random.Range(0, c.attackDamage);
         
@@ -63,15 +63,21 @@ public abstract class Character : MonoBehaviour {
 
     private void characterDisappear()
     {
-        enemy.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        enemyIcon = GameObject.Find("/BattleScene/Enemy");
+        playerIcon = GameObject.Find("/BattleScene/Character");
+        enemyIcon.gameObject.SetActive(false);
+        //enemy.gameObject.SetActive(false);
+        playerIcon.gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         Invoke("characterReappear", 0.05f);
     }
 
     private void characterReappear()
     {
-        enemy.gameObject.SetActive(true);
-        gameObject.SetActive(true);
+        enemyIcon.gameObject.SetActive(true);
+        //enemy.gameObject.SetActive(true);
+        playerIcon.gameObject.SetActive(true);
+        //gameObject.SetActive(true);
     }
 
     public abstract void death(Character c);
