@@ -17,6 +17,7 @@ public class Player : Character {
     private int runAwayChance = 25; //percent
     private Character recentlySlainEnemy;
     private float totalXP;
+	public GameObject display;
     private int enemyExperienceReward = 1;
     private Slider experience;    
 
@@ -34,9 +35,7 @@ public class Player : Character {
     {
         #region Slider
         findGameText();
-        Transform canvas = transform.root;
-        Transform d = canvas.Find("Player Display");
-        GameObject display = d.gameObject;
+		display = transform.root.Find("Player Display").gameObject;
         Slider[] sliders = display.GetComponentsInChildren<Slider>();
         foreach (Slider s in sliders)
         {

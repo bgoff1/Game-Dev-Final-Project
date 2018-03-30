@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
     [Header("Set in Inspector")]
-    public Camera playerCamera;
+    public Camera caveCamera;
 	public Camera battleCamera;
     public GameObject playerHUD;
     public GameObject playerDisplay;
@@ -31,12 +31,12 @@ public class PlayerMovement : MonoBehaviour {
 
     void Start()
     {
-        playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
+        caveCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
     }
 
 	void FixedUpdate () {
 
-        if (!isMoving)
+		if (!isMoving && caveCamera.isActiveAndEnabled)
         {
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
@@ -58,6 +58,10 @@ public class PlayerMovement : MonoBehaviour {
                 moveDirection = Direction.West;
                 startMovingPlayer();
             }
+			else if (Input.GetKey(KeyCode.F))
+			{
+				enterBattle();
+			}
         }
     }
 
@@ -143,11 +147,12 @@ public class PlayerMovement : MonoBehaviour {
     
     public void enterBattle()
 	{
-		playerCamera.gameObject.SetActive(false);
+		caveCamera.gameObject.SetActive(false);
 		battleCamera.gameObject.SetActive(true);
         playerHUD.SetActive(true);
         playerDisplay.SetActive(true);
         enemyDisplay.SetActive(true);
+		Combat.spawnEnemy();
     }
 }
 

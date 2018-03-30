@@ -10,7 +10,6 @@ public abstract class Character : MonoBehaviour {
     public int level;
     public int attackGrowth;
     public int healthGrowth;
-    public GameObject display;
     public Slider health;
     public string charName;
     public Text gameText;
@@ -66,18 +65,14 @@ public abstract class Character : MonoBehaviour {
         enemyIcon = GameObject.Find("/BattleScene/Enemy");
         playerIcon = GameObject.Find("/BattleScene/Character");
         enemyIcon.gameObject.SetActive(false);
-        //enemy.gameObject.SetActive(false);
         playerIcon.gameObject.SetActive(false);
-        //gameObject.SetActive(false);
         Invoke("characterReappear", 0.05f);
     }
 
     private void characterReappear()
     {
         enemyIcon.gameObject.SetActive(true);
-        //enemy.gameObject.SetActive(true);
         playerIcon.gameObject.SetActive(true);
-        //gameObject.SetActive(true);
     }
 
     public abstract void death(Character c);

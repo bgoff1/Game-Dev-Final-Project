@@ -7,6 +7,8 @@ public class Enemy : Character {
 
     private GameObject loseScreen;
 
+	public GameObject display;
+
     public void setUp(GameObject enemy, GameObject displayP, GameObject losescreen)
     {
         display = displayP;
