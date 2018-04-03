@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool isMoving = false;
     private Direction moveDirection;
     private Vector3 endPos;
+	private Vector3 midPos;
 
     // how far the player goes on each movement
     private const float MOVE_DISTANCE = 0.5f;
@@ -24,7 +25,7 @@ public class PlayerMovement : MonoBehaviour {
     // how much time is waited before isMoving boolean is set
         // back to false after moving. Makes moving rapidly less
         // chaotic
-    private const float WAIT_INTERVAL = 0.15f;
+	private const float WAIT_INTERVAL = 0f;//0.15f;
     // what percent chance to encounter an enemy
         // chance out of 100 per move
     private const int ENCOUNTER_CHANCE = 5;
@@ -69,19 +70,24 @@ public class PlayerMovement : MonoBehaviour {
     {
         isMoving = true;
         endPos = transform.position;
+		midPos = transform.position;
         switch (moveDirection)
         {
-            case Direction.North:
-                endPos.y += MOVE_DISTANCE;
+			case Direction.North:
+				endPos.y += MOVE_DISTANCE;
+				midPos.y += (MOVE_DISTANCE / 2);
                 break;
-            case Direction.South:
-                endPos.y -= MOVE_DISTANCE;
+			case Direction.South:
+				endPos.y -= MOVE_DISTANCE;
+				midPos.y -= (MOVE_DISTANCE / 2);
                 break;
-            case Direction.East:
-                endPos.x -= MOVE_DISTANCE;
+			case Direction.East:
+				endPos.x -= MOVE_DISTANCE;
+				midPos.x -= (MOVE_DISTANCE / 2);
                 break;
-            case Direction.West:
-                endPos.x += MOVE_DISTANCE;
+			case Direction.West:
+				endPos.x += MOVE_DISTANCE;
+				midPos.x += (MOVE_DISTANCE / 2);
                 break;
         }
         InvokeRepeating("movePlayer", 0.0f, MOVE_SPEED);
@@ -90,7 +96,11 @@ public class PlayerMovement : MonoBehaviour {
     private void movePlayer()
     {
         Vector3 charPosition = transform.position;
-        if (!Physics2D.OverlapBox(endPos, transform.localScale, 0f))
+		Collider2D coll;
+		coll = Physics2D.OverlapBox(endPos, transform.localScale, 0f);
+		if (coll == null)
+			coll = Physics2D.OverlapBox(midPos, transform.localScale, 0f);
+		if (coll == null || coll.name == "Player")
         {
             if (charPosition != endPos)
             {
@@ -133,11 +143,26 @@ public class PlayerMovement : MonoBehaviour {
         }
         else
         {
+			if (Physics2D.OverlapBox(endPos, transform.localScale, 0f))
+			{
+				print("endPos");
+				print(Physics2D.OverlapBox(endPos, transform.localScale, 0f));
+			}
+			else if (Physics2D.OverlapBox(midPos, transform.localScale, 0f))
+			{
+				print("midPos");
+				print(Physics2D.OverlapBox(midPos, transform.localScale, 0f));
+			}
             isMoving = false;
-            print(Physics2D.OverlapBox(endPos, transform.localScale, 0f));
             CancelInvoke("movePlayer");
         }
     }
+
+	public void stopMoving()
+	{
+		CancelInvoke("movePlayer");
+		isMoving = false;
+	}
 
     private void canMoveAgain()
     {
