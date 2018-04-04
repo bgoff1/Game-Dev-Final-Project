@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     private Direction moveDirection;
     private Vector3 endPos;
 	private Vector3 midPos;
+	private Vector3 charPosition;
 
     // how far the player goes on each movement
     private const float MOVE_DISTANCE = 0.5f;
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
     // how much time is waited before isMoving boolean is set
         // back to false after moving. Makes moving rapidly less
         // chaotic
-	private const float WAIT_INTERVAL = 0f;//0.15f;
+	private const float WAIT_INTERVAL = 0.15f;//0f;
     // what percent chance to encounter an enemy
         // chance out of 100 per move
     private const int ENCOUNTER_CHANCE = 5;
@@ -95,52 +96,21 @@ public class PlayerMovement : MonoBehaviour {
 
     private void movePlayer()
     {
-        Vector3 charPosition = transform.position;
-		Collider2D coll;
-		coll = Physics2D.OverlapBox(endPos, transform.localScale, 0f);
-		if (coll == null)
-			coll = Physics2D.OverlapBox(midPos, transform.localScale, 0f);
-		if (coll == null || coll.name == "Player")
+		Collider2D collend, collmid;
+		collend = Physics2D.OverlapBox(endPos, transform.localScale, 0f);
+		collmid = Physics2D.OverlapBox(midPos, transform.localScale, 0f);
+		charPosition = transform.position;
+		if ((collend == null && collmid == null) || (collmid != null && collmid.name == "Player")
+			|| (collend != null && collend.CompareTag("Ladder")))
         {
-            if (charPosition != endPos)
-            {
-                // if theres an encounter
-                if (Random.Range(0f, 100f) < ENCOUNTER_CHANCE)
-                {
-                    // change the view to the battle view and enable
-                        // the HUD
-                    //enterBattle();
-                    
-                }
-                // otherwise, set where the player is going to move to,
-                    // and start moving there
-                else
-                {
-                    switch (moveDirection)
-                    {
-                        case Direction.North:
-                            charPosition.y += MOVE_INCREMENT;
-                            break;
-                        case Direction.South:
-                            charPosition.y -= MOVE_INCREMENT;
-                            break;
-                        case Direction.East:
-                            charPosition.x -= MOVE_INCREMENT;
-                            break;
-                        case Direction.West:
-                            charPosition.x += MOVE_INCREMENT;
-                            break;
-                    }
-                    transform.position = charPosition;
-                    if (charPosition == endPos)
-                    {
-                        CancelInvoke("movePlayer");
-                        // sets isMoving to false
-                        Invoke("canMoveAgain", WAIT_INTERVAL);
-                    }
-                }
-            }
+			characterMovement(endPos, MOVE_INCREMENT);
         }
+		else if ((collmid == null && collend != null) || collmid.CompareTag("Ladder"))
+		{
+			//print(collmid.name);
+			if (collend != null) { print(collend.name); }
+			characterMovement(midPos, MOVE_INCREMENT);
+		}
         else
         {
 			if (Physics2D.OverlapBox(endPos, transform.localScale, 0f))
@@ -157,6 +127,52 @@ public class PlayerMovement : MonoBehaviour {
             CancelInvoke("movePlayer");
         }
     }
+
+	private void characterMovement(Vector3 positionToMoveTo, float moveIncrement)
+	{
+		if (charPosition != positionToMoveTo)
+		{
+			// if theres an encounter
+			if (Random.Range(0f, 100f) < ENCOUNTER_CHANCE)
+			{
+				// change the view to the battle view and enable
+				// the HUD
+				//enterBattle();
+
+			}
+			// otherwise, set where the player is going to move to,
+			// and start moving there
+			else
+			{
+				switch (moveDirection)
+				{
+					case Direction.North:
+						charPosition.y += moveIncrement;
+						break;
+					case Direction.South:
+						charPosition.y -= moveIncrement;
+						break;
+					case Direction.East:
+						charPosition.x -= moveIncrement;
+						break;
+					case Direction.West:
+						charPosition.x += moveIncrement;
+						break;
+				}
+				transform.position = charPosition;
+				if (charPosition == positionToMoveTo)
+				{
+					CancelInvoke("movePlayer");
+					// sets isMoving to false
+					Invoke("canMoveAgain", WAIT_INTERVAL);
+				}
+			}
+		}
+		else {
+			CancelInvoke("movePlayer");
+			Invoke("canMoveAgain", WAIT_INTERVAL);
+		}
+	}
 
 	public void stopMoving()
 	{

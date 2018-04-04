@@ -6,6 +6,8 @@ public class UpLadderFloor1Collider : MonoBehaviour {
 
 	public Vector3 teleportLocation;
 
+	private Collider2D coll;
+
 	void Start()
 	{
 		switch (gameObject.name)
@@ -22,9 +24,14 @@ public class UpLadderFloor1Collider : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.name == "Player") {
-			print("hi " + other.name);
-			other.gameObject.transform.position = teleportLocation;
-			other.SendMessage("stopMoving");
+			coll = other;
+			other.gameObject.SendMessage("stopMoving");
+			Invoke("teleport", 0.1f);
 		}
+	}
+
+	void teleport()
+	{
+		coll.gameObject.transform.position = teleportLocation;
 	}
 }
