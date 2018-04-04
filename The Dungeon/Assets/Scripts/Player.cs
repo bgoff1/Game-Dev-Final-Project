@@ -110,25 +110,22 @@ public class Player : Character {
         totalXP = experience.value + enemyExperienceReward;
         
         //InvokeRepeating("addExperience", 0f, TIME_DELAY);
-        addingXP = true;
-        /*while*/ if (addingXP)
-        {
-            Invoke("addExperience", TIME_DELAY);
-        }
+		Invoke("addExperience", TIME_DELAY);
         /*if (!IsInvoking("addExperience"))
         {
             enemyDefeated();
         }
         else
         {*/
-            Invoke("enemyDefeated", TIME_DELAY * enemyExperienceReward);
+		enemyDefeated();
+            //Invoke("enemyDefeated", TIME_DELAY * enemyExperienceReward);
         //}
     }
 
     private void enemyDefeated()
     {
-        if (experience.value == experience.maxValue)
-            levelUp();
+        //if (experience.value == experience.maxValue)
+            //levelUp();
         if (Random.Range(0,100) < healthPotionDropChance && 
             numHealthPotions < maxHealthPotions)
         {
@@ -184,10 +181,21 @@ public class Player : Character {
     private void addExperience()
     {
         experience.value++;
-        if (experience.value == totalXP || experience.value == experience.maxValue)
-        {
-            addingXP = false;
-        }
+		if (experience.value == experience.maxValue)
+		{
+			levelUp();
+			if (experience.value == totalXP)
+			{
+				addingXP = false;
+			}
+			else {
+				addingXP = true;
+			}
+		}
+		if (addingXP)
+		{
+			addExperience();
+		}
     }
 
     private void updatePotionCount()
