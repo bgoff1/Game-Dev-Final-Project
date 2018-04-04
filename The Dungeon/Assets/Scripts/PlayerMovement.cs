@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour {
 			{
 				// change the view to the battle view and enable
 				// the HUD
-				//enterBattle();
+				enterBattle();
 
 			}
 			// otherwise, set where the player is going to move to,
