@@ -470,12 +470,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameText: {fileID: 1298222301}
   potionCount: {fileID: 395566671}
-  enemyDisplay: {fileID: 691891339}
-  loseScreen: {fileID: 1633772891}
-  buttons:
-  - {fileID: 415202867}
-  - {fileID: 1469176803}
-  - {fileID: 771426238}
 --- !u!1 &212275262
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,6 +801,7 @@ MonoBehaviour:
   characterHUD: {fileID: 168347854}
   characterDisplay: {fileID: 1780367754}
   input: {fileID: 272441412}
+  caveBackground: {fileID: 1561009333}
   maleSprite: {fileID: 21300000, guid: c9e1e17e46e7f8040832cff1b6669a93, type: 3}
   femaleSprite: {fileID: 21300000, guid: 8ea883f2182e6f54ca447211a0111d5c, type: 3}
 --- !u!1 &395566669

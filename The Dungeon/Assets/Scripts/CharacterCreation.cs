@@ -44,14 +44,14 @@ public class CharacterCreation : MonoBehaviour
     private void setMaleCharacter()
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = maleSprite;
-        GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = maleSprite;
+      //  GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = maleSprite;
         getCharacterName();
     }
 
     private void setFemaleCharacter()
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = femaleSprite;
-        GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = femaleSprite;
+       // GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = femaleSprite;
         getCharacterName();
     }
 
