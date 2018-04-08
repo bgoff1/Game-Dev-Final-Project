@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class CharacterCreation : MonoBehaviour
 {
 
@@ -44,15 +44,18 @@ public class CharacterCreation : MonoBehaviour
     private void setMaleCharacter()
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = maleSprite;
-      //  GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = maleSprite;
+        //  GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = maleSprite;
+        PlayerPrefs.SetString("gender", "male");
         getCharacterName();
     }
 
     private void setFemaleCharacter()
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = femaleSprite;
+        PlayerPrefs.SetString("gender", "female");
        // GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = femaleSprite;
         getCharacterName();
+        
     }
 
     private void getCharacterName()
@@ -70,7 +73,9 @@ public class CharacterCreation : MonoBehaviour
         caveBackground.SetActive(true);
         //characterDisplay.SetActive(true);
         characterDisplay.GetComponentInChildren<Text>().text = input.GetComponent<InputField>().text.ToUpper();
+        PlayerPrefs.SetString("playerName", input.GetComponent<InputField>().text.ToUpper());
         // characterHUD.SetActive(true);
         input.SetActive(false);
+        SceneManager.LoadScene(PlayerPrefs.GetString("mode"));
     }
 }

@@ -28,12 +28,15 @@ public class MainMenu : MonoBehaviour {
 	#region  startFunctions
 	private void startAdventure()
 	{
-		SceneManager.LoadScene("AdventureMode");
-	}
+        PlayerPrefs.SetString("mode", "AdventureMode");
+        SceneManager.LoadScene("CharacterChoice");
+
+    }
 
 	private void startEndless()
 	{
-		SceneManager.LoadScene("EndlessMode");
-	}
+        PlayerPrefs.SetString("mode", "EndlessMode");
+        SceneManager.LoadScene("CharacterChoice");
+    }
 	#endregion
 }
