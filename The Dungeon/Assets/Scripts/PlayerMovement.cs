@@ -64,6 +64,10 @@ public class PlayerMovement : MonoBehaviour {
 			{
 				enterBattle();
 			}
+            else if (Input.GetKey(KeyCode.E))
+            {
+                transform.position = new Vector3((float)-25.05, (float)-1.21, 0);
+            }
         }
     }
 
