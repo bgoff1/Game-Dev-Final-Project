@@ -86,6 +86,7 @@ public class Player : Character {
             // deal double damage
             float damageTakenByEnemy = startEnemyHP - c.health.value;
             c.health.value -= damageTakenByEnemy;
+            c.updateHealthText();
             // kill the enemy if its health is 0
             if (c.health.value < 1)
             {

@@ -28,6 +28,8 @@ public class Combat : MonoBehaviour {
 	#endregion
 	static private Sprite[] enemies;
 	static private GameObject s;
+    static public GameObject battlePanel;
+
 	#region Display
 	static public GameObject enemyDisplay;
 	static public GameObject loseScreen;
@@ -49,12 +51,14 @@ public class Combat : MonoBehaviour {
         fight();
     }
 
-	private void setupUI()
+
+
+    private void setupUI()
 	{
 		enemyDisplay = transform.parent.Find("Enemy Display").gameObject;
 		loseScreen = transform.parent.Find("Lose Screen").gameObject;
-
-		Camera[] cams = Resources.FindObjectsOfTypeAll<Camera>();
+        battlePanel = transform.parent.Find("EndBattleScreen").gameObject;
+        Camera[] cams = Resources.FindObjectsOfTypeAll<Camera>();
 		foreach (Camera c in cams)
 		{
 			if (c.name == "BattleCamera")
@@ -139,17 +143,23 @@ public class Combat : MonoBehaviour {
 			// if enemy was killed
             if (player.enemySlain)
             {
-                enemy = null;
-				player.enemySlain = false;
-				// change view back to cave
-				battleCamera.gameObject.SetActive(false);
-				caveCamera.gameObject.SetActive(true);
-				// hide ui
-				player.display.SetActive(false);
-				enemyDisplay.SetActive(false);
-				s.SetActive(false);
+                battlePanel.SetActive(true);
             }
         }
+    }
+
+    public void BackToCave()
+    {
+        battlePanel.SetActive(false);
+        enemy = null;
+        player.enemySlain = false;
+        // change view back to cave
+        battleCamera.gameObject.SetActive(false);
+        caveCamera.gameObject.SetActive(true);
+        // hide ui
+        player.display.SetActive(false);
+        enemyDisplay.SetActive(false);
+        s.SetActive(false);
     }
 
 	static public void spawnEnemy()
