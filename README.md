@@ -11,16 +11,21 @@ and using the arrow keys.
 2. Summary of program - The player maneuvers through a cave aiming to reach the exit without dying from the monsters that spawn while going through.
 3. Bugs remaining - none, hopefully
 4. Teammates contribution - 
-      Brandy - 
-          a. Walls
-          b. Character creation
-          c. Extra fighting abilities
-          d. Cheat codes
-          e. Tutorial
-      Judah - 
-          a. Walls
-          b. Fight
-          c. Keyboard input for fight
-          d. End
-          e. Music
+
+    >  Brandy - 
+    >
+    >      a. Walls
+    >      b. Character creation
+    >      c. Extra fighting abilities
+    >      d. Cheat codes
+    >      e. Tutorial
+   
+    >  Judah - 
+    >
+    >      a. Walls
+    >      b. Fight
+    >      c. Keyboard input for fight
+    >      d. End
+    >      e. Music
+    
 5. Percentage of work contribution - 50/50
