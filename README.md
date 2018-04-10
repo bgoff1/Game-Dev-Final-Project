@@ -7,5 +7,20 @@ https://www.reddit.com/r/learnprogramming/comments/5quy41/i_created_a_very_simpl
 Includes a player to move throughout a cave by fighting enemies
 and using the arrow keys.
 
-Link to other repo for movement reference
-https://github.com/bgoff1/Test
+1. Link to repo - https://github.com/bgoff1/Game-Dev-Final-Project/
+2. Summary of program - The player maneuvers through a cave aiming to reach the exit without dying from the monsters that spawn while going through.
+3. Bugs remaining - none, hopefully
+4. Teammates contribution - 
+      Brandy - 
+          a. Walls
+          b. Character creation
+          c. Extra fighting abilities
+          d. Cheat codes
+          e. Tutorial
+      Judah - 
+          a. Walls
+          b. Fight
+          c. Keyboard input for fight
+          d. End
+          e. Music
+5. Percentage of work contribution - 50/50
