@@ -17,6 +17,10 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 	private Button topRight;
 	private Button botLeft;
 	private Button botRight;
+	private Image tlS;
+	private Image trS;
+	private Image blS;
+	private Image brS;
 	private CursorSpot cs;
 	private Sprite cursor;
 
@@ -27,8 +31,20 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 		botLeft = transform.Find("BottomButtons").transform.Find("BotLeft").gameObject.GetComponent<Button>();
 		botRight = transform.Find("BottomButtons").transform.Find("BotRight").gameObject.GetComponent<Button>();
 		cursor = (Sprite)Resources.Load("Images/redarrow", typeof(Sprite));
+		tlS = getImage(topLeft);
+		trS = getImage(topRight);
+		blS = getImage(botLeft);
+		brS = getImage(botRight);
+		trS.gameObject.SetActive(false);
+		blS.gameObject.SetActive(false);
+		brS.gameObject.SetActive(false);
 		cs = CursorSpot.TopLeft;
 		topLeft.transform.Find("Image").gameObject.GetComponent<Image>().sprite = cursor;
+	}
+
+	private Image getImage(Button b)
+	{
+		return b.transform.Find("Image").GetComponent<Image>();
 	}
 
 	private void Update()
@@ -124,14 +140,32 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 		return null;
 	}
 
+	private Image getImageFromCursorSpot()
+	{
+		switch (cs)
+		{
+			case CursorSpot.BotLeft:
+				return blS;
+			case CursorSpot.BotRight:
+				return brS;
+			case CursorSpot.TopLeft:
+				return tlS;
+			case CursorSpot.TopRight:
+				return trS;
+		}
+		return null;
+	}
+
 	private void toggleCursor() 
 	{
-		Image currentImage = getButtonFromCursorSpot().transform.Find("Image").gameObject.GetComponent<Image>();
+		Image currentImage = getImageFromCursorSpot();
 		if (currentImage.sprite == null)
 		{
+			currentImage.gameObject.SetActive(true);
 			currentImage.sprite = cursor;
 		}
 		else {
+			currentImage.gameObject.SetActive(false);
 			currentImage.sprite = null;
 		}
 	}
