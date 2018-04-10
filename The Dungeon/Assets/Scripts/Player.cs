@@ -76,10 +76,10 @@ public class Player : Character {
         healthPotionHealAmount += potionHealGain;
     }
 
-    public override void attack(Character c)
+    public override void attack(Character c, string strength)
     {
         float startEnemyHP = c.health.value;
-        base.attack(c);
+        base.attack(c, strength);
         // if the enemy is still alive and you critically hit
         if (c.health.value >= 1 && Random.Range(0, 100) < critChance)
         {

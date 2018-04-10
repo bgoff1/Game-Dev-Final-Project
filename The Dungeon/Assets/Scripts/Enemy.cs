@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Enemy : Character {
 
     private GameObject loseScreen;
-
+    public bool playerDead;
 	public GameObject display;
 
     public void setUp(GameObject enemy, GameObject displayP, GameObject losescreen)
@@ -18,6 +18,7 @@ public class Enemy : Character {
         display.SetActive(true);
         charName = display.GetComponentInChildren<Text>().text = enemy.GetComponent<SpriteRenderer>().sprite.name.ToUpper();
         updateHealthText();
+        playerDead = false;
     }
 
     override public void setUpVariables()
@@ -55,6 +56,7 @@ public class Enemy : Character {
 
     public override void death(Character c)
     {
+        playerDead = true;
         gameText.text = "You limp out of the dungeon, weak from battle.";
         loseScreen.SetActive(true);
         Button[] allButtons = GameObject.Find("Player HUD").GetComponentsInChildren<Button>();

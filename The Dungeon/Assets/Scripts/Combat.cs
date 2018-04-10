@@ -110,16 +110,18 @@ public class Combat : MonoBehaviour {
     {
         gameText.text = " ";
         topLeft.GetComponentInChildren<Text>().text = "ATTACK";
-        topLeft.onClick.AddListener(attack);
+        topLeft.onClick.AddListener(callAttack);
         topRight.GetComponentInChildren<Text>().text = "DRINK POTION";
         topRight.onClick.AddListener(player.drinkPotion);
+        botLeft.GetComponentInChildren<Text>().text = "STRONG\nATTACK";
+        botLeft.onClick.AddListener(callStrongAttack);
     }
 
 	static public void performButtonAction(Button button)
 	{
 		if (button == topLeft)
 		{
-			attack();
+			attack("reg");
 		}
 		else if (button == topRight)
 		{
@@ -127,7 +129,7 @@ public class Combat : MonoBehaviour {
 		}
 		else if (button == botLeft)
 		{
-			print("Bottom Left button pressed.");
+            attack("strong");
 		}
 		else if (button == botRight)
 		{
@@ -135,13 +137,22 @@ public class Combat : MonoBehaviour {
 		}
 	}
 
-	static private void attack()
+    static private void callAttack()
+    {
+        attack("reg");
+    }
+
+    static private void callStrongAttack()
+    {
+        attack("strong");
+    }
+	static private void attack(string strength)
     {
         if (enemy != null)
         {
-            player.attack(enemy);
+            player.attack(enemy, strength);
 			// if enemy was killed
-            if (player.enemySlain)
+            if (player.enemySlain && enemy.playerDead == false)
             {
                 battlePanel.SetActive(true);
             }
