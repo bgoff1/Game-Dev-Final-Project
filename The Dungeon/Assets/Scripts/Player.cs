@@ -76,10 +76,11 @@ public class Player : Character {
         healthPotionHealAmount += potionHealGain;
     }
 
-    public override void attack(Character c, string strength)
+    public override void attack(Character c)
     {
+		gameText.text = "";
         float startEnemyHP = c.health.value;
-        base.attack(c, strength);
+        base.attack(c);
         // if the enemy is still alive and you critically hit
         if (c.health.value >= 1 && Random.Range(0, 100) < critChance)
         {
@@ -99,6 +100,30 @@ public class Player : Character {
             c.death(this);
         }
     }
+
+	public void strongAttack(Character c)
+	{
+		gameText.text = "";
+		float startEnemyHP = c.health.value;
+		int damageDealt = Random.Range(attackDamage, attackDamage * Mathf.FloorToInt((float)1.5));
+		int damageTaken = Random.Range(0, c.attackDamage);
+
+		health.value -= damageTaken;
+		c.health.value -= damageDealt;
+
+		updateHealthText();
+		c.updateHealthText();
+		if (c.health.value < 1)
+		{
+			death(c);
+		}
+		Invoke("characterDisappear", 0.05f);
+	}
+
+	public void strongAttackFail(int CD)
+	{
+		gameText.text = "You cannot use " + "Strong Attack" + " for " + CD + " more turns.";
+	}
 
     override public void death(Character c)
     {

@@ -43,18 +43,11 @@ public abstract class Character : MonoBehaviour {
         health.value = health.maxValue;
     }
 
-    virtual public void attack(Character c, string strength)
+    virtual public void attack(Character c)
     {
         int damageDealt = 0;
 
-        if (strength == "reg")
-        {
-            damageDealt = Random.Range(0, attackDamage);
-        }
-        else if (strength == "strong")
-        {
-            damageDealt = Random.Range(attackDamage, attackDamage * Mathf.FloorToInt((float)1.5));
-        }
+		damageDealt = Random.Range(0, attackDamage);
         int damageTaken = Random.Range(0, c.attackDamage);
         
         health.value -= damageTaken;
@@ -68,7 +61,6 @@ public abstract class Character : MonoBehaviour {
         }
         Invoke("characterDisappear", 0.05f);
     }
-
 
     private void characterDisappear()
     {

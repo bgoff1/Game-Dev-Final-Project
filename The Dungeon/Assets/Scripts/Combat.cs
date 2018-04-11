@@ -30,6 +30,8 @@ public class Combat : MonoBehaviour {
 	static private GameObject s;
     static public GameObject battlePanel;
 
+	static private int strongAttackCD = 0;
+
 	#region Display
 	static public GameObject enemyDisplay;
 	static public GameObject loseScreen;
@@ -110,26 +112,32 @@ public class Combat : MonoBehaviour {
     {
         gameText.text = " ";
         topLeft.GetComponentInChildren<Text>().text = "ATTACK";
-        topLeft.onClick.AddListener(callAttack);
+        topLeft.onClick.AddListener(attack);
         topRight.GetComponentInChildren<Text>().text = "DRINK POTION";
         topRight.onClick.AddListener(player.drinkPotion);
         botLeft.GetComponentInChildren<Text>().text = "STRONG\nATTACK";
-        botLeft.onClick.AddListener(callStrongAttack);
+        botLeft.onClick.AddListener(strongAttack);
     }
 
 	static public void performButtonAction(Button button)
 	{
 		if (button == topLeft)
 		{
-			attack("reg");
+			attack();
 		}
 		else if (button == topRight)
 		{
-			player.drinkPotion();
+			drinkPotion();
 		}
 		else if (button == botLeft)
 		{
-            attack("strong");
+			if (strongAttackCD == 0)
+			{
+				strongAttack();
+			}
+			else {
+				player.strongAttackFail(strongAttackCD);
+			}
 		}
 		else if (button == botRight)
 		{
@@ -137,20 +145,19 @@ public class Combat : MonoBehaviour {
 		}
 	}
 
-    static private void callAttack()
-    {
-        attack("reg");
-    }
+	static private void drinkPotion()
+	{
+		player.drinkPotion();
+		strongAttackCD--;
 
-    static private void callStrongAttack()
-    {
-        attack("strong");
-    }
-	static private void attack(string strength)
+	}
+
+	static private void attack()
     {
         if (enemy != null)
         {
-            player.attack(enemy, strength);
+            player.attack(enemy);
+			strongAttackCD--;
 			// if enemy was killed
             if (player.enemySlain && enemy.playerDead == false)
             {
@@ -158,6 +165,20 @@ public class Combat : MonoBehaviour {
             }
         }
     }
+
+	static private void strongAttack()
+	{
+		if (enemy != null)
+		{
+			player.strongAttack(enemy);
+			strongAttackCD = 3;
+			// if enemy was killed
+			if (player.enemySlain && enemy.playerDead == false)
+			{
+				battlePanel.SetActive(true);
+			}
+		}
+	}
 
     public void BackToCave()
     {
