@@ -71,15 +71,16 @@ public class PlayerMovement : MonoBehaviour {
                 transform.position = new Vector3((float)-25.05, (float)-1.21, 0);
             }
 
-			if(transform.position.x <= 7.5 && transform.position.x >= 7 && transform.position.y <= 10.5 && transform.position.y >= 10)
+			if((transform.position.x <= 7.5 && transform.position.x >= 7 && transform.position.y <= 10.5 && transform.position.y >= 10) || (transform.position.x <= -24.5 && transform.position.x >= -25.25 && transform.position.y <= -1.5 && transform.position.y >= -2.25))
 			{
-				
 				playerCollider.enabled = true;
 			}
 			else
 			{
 				playerCollider.enabled =false;
 			}
+
+			
         }
     }
 
