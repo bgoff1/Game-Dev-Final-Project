@@ -255,19 +255,5 @@ public class Player : Character {
         }
     }
 
-    private void runAway()
-    {
-        if (Random.Range(0, 100) > runAwayChance && !alreadyRanAway) 
-        {
-            gameText.text = "You got away successfully!";
-            gameText.text = gameText.text.ToUpper();
-            runAwayChance -= 5;
-        }
-        else
-        {
-            gameText.text = "You can't get away!";
-            gameText.text = gameText.text.ToUpper();
-            alreadyRanAway = true;
-        }
-    }
+    
 }

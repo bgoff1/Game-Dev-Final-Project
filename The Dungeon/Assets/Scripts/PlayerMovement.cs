@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour {
 
     [Header("Set in Inspector")]
@@ -9,12 +9,20 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject playerHUD;
     public GameObject playerDisplay;
     public GameObject enemyDisplay;
-    
+    public GameObject preBattleScreen;
+
+	public GameObject fightButton;
+	public GameObject runButton;
+	private bool canMove = true;
+	public GameObject adventureButton;
     private bool isMoving = false;
     private Direction moveDirection;
     private Vector3 endPos;
 	private Vector3 midPos;
 	private Vector3 charPosition;
+
+	private bool alreadyRanAway = false;
+	private int runAwayChance = 25;
 
     // how far the player goes on each movement
     private const float MOVE_DISTANCE = 0.5f;
@@ -40,7 +48,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void FixedUpdate () {
 
-		if (!isMoving && caveCamera.isActiveAndEnabled)
+		if (!isMoving && caveCamera.isActiveAndEnabled && canMove)
         {
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
@@ -155,7 +163,9 @@ public class PlayerMovement : MonoBehaviour {
 				// change the view to the battle view and enable
 				// the HUD
 				//enterBattle();
-
+				preBattleScreen.SetActive(true);
+				
+				canMove = false;
 			}
 			// otherwise, set where the player is going to move to,
 			// and start moving there
@@ -202,7 +212,62 @@ public class PlayerMovement : MonoBehaviour {
         isMoving = false;
     }
 
-    
+
+    public void fightButtonAction(){
+		GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU ENCOUNTERED AN ENEMY!";
+		Vector3 pos = fightButton.transform.position;
+		pos.x = 300;
+		fightButton.transform.position = pos;
+		runButton.SetActive(true);
+		preBattleScreen.SetActive(false);
+		enterBattle();
+		canMove = true;
+	}
+
+	public bool runAway()
+    {
+        if (Random.Range(0, 100) < runAwayChance && !alreadyRanAway) 
+        {
+            runAwayChance -= 5;
+            return true;
+        }
+        else
+        {
+            
+            alreadyRanAway = true;
+            return false;
+
+        }
+    }
+	public void runButtonAction(){
+		bool success = runAway();
+		
+		if(success)
+		{
+			GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU RAN AWAY SUCCESSFULLY!";
+			fightButton.SetActive(false);
+			runButton.SetActive(false);
+			adventureButton.SetActive(true);
+		}
+		else{
+			GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU CAN'T GET AWAY! YOU WILL HAVE TO FIGHT.";
+			Vector3 pos = fightButton.transform.position;
+			pos.x = 500;
+			fightButton.transform.position = pos;
+			
+			adventureButton.SetActive(false);
+			runButton.SetActive(false);
+		}
+	}
+
+	public void backToAdventureButtonAction(){
+		adventureButton.SetActive(false);
+		fightButton.SetActive(true);
+		runButton.SetActive(true);
+		GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU ENCOUNTERED AN ENEMY!";
+		preBattleScreen.SetActive(false);
+		canMove = true;
+	}
     public void enterBattle()
 	{
 		caveCamera.gameObject.SetActive(false);
