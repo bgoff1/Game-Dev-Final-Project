@@ -24,9 +24,9 @@ public class Player : Character {
     private const float TIME_DELAY = 0.01f;
     
     public bool enemySlain = false;
-
-    public void Awake()
+       public void Awake()
     {
+        
         setUpVariables();
         setUpUI();
     }

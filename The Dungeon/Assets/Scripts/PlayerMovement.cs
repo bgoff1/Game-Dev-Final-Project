@@ -31,10 +31,12 @@ public class PlayerMovement : MonoBehaviour {
         // chance out of 100 per move
     private const int ENCOUNTER_CHANCE = 5;
 
+	private BoxCollider2D playerCollider;
     void Start()
     {
         caveCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
-    }
+		playerCollider = GetComponent<BoxCollider2D>();
+	}
 
 	void FixedUpdate () {
 
@@ -68,6 +70,16 @@ public class PlayerMovement : MonoBehaviour {
             {
                 transform.position = new Vector3((float)-25.05, (float)-1.21, 0);
             }
+
+			if(transform.position.x <= 7.5 && transform.position.x >= 7 && transform.position.y <= 10.5 && transform.position.y >= 10)
+			{
+				
+				playerCollider.enabled = true;
+			}
+			else
+			{
+				playerCollider.enabled =false;
+			}
         }
     }
 
@@ -141,7 +153,7 @@ public class PlayerMovement : MonoBehaviour {
 			{
 				// change the view to the battle view and enable
 				// the HUD
-				enterBattle();
+				//enterBattle();
 
 			}
 			// otherwise, set where the player is going to move to,
