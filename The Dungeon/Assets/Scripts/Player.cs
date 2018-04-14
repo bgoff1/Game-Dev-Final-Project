@@ -76,6 +76,14 @@ public class Player : Character {
         healthPotionHealAmount += potionHealGain;
     }
 
+    public void shieldFail(int CD)
+    {
+        gameText.text = "You cannot use " + "Shield" + " for " + CD + " more turns.";
+    }
+
+    public void shield(){
+        gameText.text = "You used a shield. Neither you nor the enemy took damage this turn";
+    }
     public override void attack(Character c)
     {
 		gameText.text = "";

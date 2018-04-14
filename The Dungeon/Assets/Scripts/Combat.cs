@@ -31,6 +31,7 @@ public class Combat : MonoBehaviour {
     static public GameObject battlePanel;
 
 	static private int strongAttackCD = 0;
+	static private int shieldCD = 0;
 
 	#region Display
 	static public GameObject enemyDisplay;
@@ -117,6 +118,8 @@ public class Combat : MonoBehaviour {
         topRight.onClick.AddListener(player.drinkPotion);
         botLeft.GetComponentInChildren<Text>().text = "STRONG\nATTACK";
         botLeft.onClick.AddListener(strongAttack);
+		botRight.GetComponentInChildren<Text>().text = "SHIELD";
+        botRight.onClick.AddListener(callShield);
     }
 
 	static public void performButtonAction(Button button)
@@ -131,7 +134,7 @@ public class Combat : MonoBehaviour {
 		}
 		else if (button == botLeft)
 		{
-			if (strongAttackCD == 0)
+			if (strongAttackCD <= 0)
 			{
 				strongAttack();
 			}
@@ -141,7 +144,13 @@ public class Combat : MonoBehaviour {
 		}
 		else if (button == botRight)
 		{
-			print("Bottom Right button pressed.");
+			if(shieldCD <= 0)
+			{
+				callShield();
+			}
+			else{
+				player.shieldFail(shieldCD);
+			}
 		}
 	}
 
@@ -149,14 +158,24 @@ public class Combat : MonoBehaviour {
 	{
 		player.drinkPotion();
 		strongAttackCD--;
+		shieldCD--;
 
 	}
 
+	static private void callShield(){
+		if(enemy != null)
+		{
+			shieldCD = 2;
+			strongAttackCD--;
+			player.shield();
+		}
+	}
 	static private void attack()
     {
         if (enemy != null)
         {
             player.attack(enemy);
+			shieldCD --;
 			strongAttackCD--;
 			// if enemy was killed
             if (player.enemySlain && enemy.playerDead == false)
@@ -171,6 +190,7 @@ public class Combat : MonoBehaviour {
 		if (enemy != null)
 		{
 			player.strongAttack(enemy);
+			shieldCD--;
 			strongAttackCD = 3;
 			// if enemy was killed
 			if (player.enemySlain && enemy.playerDead == false)
