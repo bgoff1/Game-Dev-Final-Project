@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Player : Character {
 
-    private bool alreadyRanAway = false;
     private bool addingXP = false;
     private int critChance = 5; //percent
     private int experienceNeededMultiplier = 3;
@@ -14,7 +13,6 @@ public class Player : Character {
     private int maxHealthPotions = 5;
     private int numHealthPotions = 3;
     private int potionHealGain = 10;
-    private int runAwayChance = 25; //percent
     private Character recentlySlainEnemy;
     private float totalXP;
 	public GameObject display;
@@ -136,7 +134,6 @@ public class Player : Character {
     override public void death(Character c)
     {
         findGameText();
-        alreadyRanAway = false;
         recentlySlainEnemy = c;
         enemySlain = true;
         gameText.text = c.charName + " was defeated! You gain " + enemyExperienceReward + 

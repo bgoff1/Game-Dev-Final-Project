@@ -10,11 +10,13 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject playerDisplay;
     public GameObject enemyDisplay;
     public GameObject preBattleScreen;
-
+	public GameObject firstPlayScreen;
+	public GameObject arrowDirections;
+	public GameObject arrows;
 	public GameObject fightButton;
 	public GameObject runButton;
-	private bool canMove = true;
 	public GameObject adventureButton;
+	private bool canMove = true;
     private bool isMoving = false;
     private Direction moveDirection;
     private Vector3 endPos;
@@ -42,8 +44,15 @@ public class PlayerMovement : MonoBehaviour {
 	private BoxCollider2D playerCollider;
     void Start()
     {
+		//PlayerPrefs.DeleteAll();
         caveCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
 		playerCollider = GetComponent<BoxCollider2D>();
+		if(!PlayerPrefs.HasKey("notFirstTime"))
+		{
+			firstPlayScreen.SetActive(true);
+			canMove = false;
+			PlayerPrefs.SetInt("notFirstTime", 1);
+		}
 	}
 
 	void FixedUpdate () {
@@ -212,11 +221,21 @@ public class PlayerMovement : MonoBehaviour {
         isMoving = false;
     }
 
-
+	private void turnOffArrows(){
+		arrowDirections.SetActive(false);
+		arrows.SetActive(false);
+	}
+	public void letsGoButtonAction(){
+		firstPlayScreen.SetActive(false);
+		canMove = true;
+		arrowDirections.SetActive(true);
+		arrows.SetActive(true);
+		Invoke("turnOffArrows", 3);
+	}
     public void fightButtonAction(){
 		GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU ENCOUNTERED AN ENEMY!";
 		Vector3 pos = fightButton.transform.position;
-		pos.x = 300;
+		pos.x = 400;
 		fightButton.transform.position = pos;
 		runButton.SetActive(true);
 		preBattleScreen.SetActive(false);
