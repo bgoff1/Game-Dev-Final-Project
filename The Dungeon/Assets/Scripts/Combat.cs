@@ -32,7 +32,7 @@ public class Combat : MonoBehaviour {
 
 	static private int strongAttackCD = 0;
 	static private int shieldCD = 0;
-
+    static private Sprite boss;
 	#region Display
 	static public GameObject enemyDisplay;
 	static public GameObject loseScreen;
@@ -94,8 +94,7 @@ public class Combat : MonoBehaviour {
             }
         }
 		battlePanel.SetActive(true);
-		Button bu = battlePanel.GetComponentInChildren<Button>();
-		bu.onClick.AddListener(BackToCave);
+		battlePanel.GetComponentInChildren<Button>().onClick.AddListener(BackToCave);
 		battlePanel.SetActive(false);
     }
 
@@ -109,7 +108,14 @@ public class Combat : MonoBehaviour {
 			enemies = new Sprite[monsters.Length];
 			for (int i = 0; i < monsters.Length; i++)
 			{
-				enemies[i] = (Sprite)monsters[i];
+                if (monsters[i].name != "Skeletal Dragon")
+                {
+				    enemies[i] = (Sprite)monsters[i];
+                }
+                else
+                {
+                    boss = (Sprite)monsters[i];
+                }
 			}
 		}
 	}
@@ -227,8 +233,10 @@ public class Combat : MonoBehaviour {
         enemy = null;
         player.enemySlain = false;
         // change view back to cave
+        battleCamera.GetComponent<AudioListener>().enabled = false;
         battleCamera.gameObject.SetActive(false);
         caveCamera.gameObject.SetActive(true);
+        caveCamera.GetComponent<AudioListener>().enabled = true;
         // hide UI
         player.display.SetActive(false);
         enemyDisplay.SetActive(false);
@@ -248,7 +256,7 @@ public class Combat : MonoBehaviour {
 
 	static public void spawnBoss()
 	{
-		gEnemy.GetComponent<SpriteRenderer>().sprite = enemies [Random.Range(0, enemies.Length - 1)];
+		gEnemy.GetComponent<SpriteRenderer>().sprite = boss;
 		if (enemy == null)
 		{
 			enemy = s.AddComponent<Enemy>();

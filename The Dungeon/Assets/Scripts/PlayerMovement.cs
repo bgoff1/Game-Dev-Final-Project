@@ -324,7 +324,9 @@ public class PlayerMovement : MonoBehaviour {
 
     public void enterBattle()
 	{
+        caveCamera.GetComponent<AudioListener>().enabled = false;
 		caveCamera.gameObject.SetActive(false);
+        battleCamera.GetComponent<AudioListener>().enabled = true;
 		battleCamera.gameObject.SetActive(true);
         playerHUD.SetActive(true);
         playerDisplay.SetActive(true);
@@ -334,8 +336,10 @@ public class PlayerMovement : MonoBehaviour {
 
 	public void enterBossBattle()
 	{
+        caveCamera.GetComponent<AudioListener>().enabled = false;
 		caveCamera.gameObject.SetActive(false);
 		battleCamera.gameObject.SetActive(true);
+        battleCamera.GetComponent<AudioListener>().enabled = true;
 		playerHUD.SetActive(true);
 		playerDisplay.SetActive(true);
 		enemyDisplay.SetActive(true);
