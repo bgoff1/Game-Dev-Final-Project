@@ -35,8 +35,7 @@ public class MainMenu : MonoBehaviour {
 
 	private void startEndless()
 	{
-        PlayerPrefs.SetString("mode", "EndlessMode");
-        SceneManager.LoadScene("CharacterChoice");
+        SceneManager.LoadScene("Information");
     }
 	#endregion
 }
