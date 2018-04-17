@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject enemyDisplay;
     public GameObject preBattleScreen;
 	public GameObject firstPlayScreen;
+	public GameObject firstBattleScreen;
+	public GameObject informationScreen;
 	public GameObject arrowDirections;
 	public GameObject arrows;
 	public GameObject fightButton;
@@ -24,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector3 charPosition;
 
 	private bool alreadyRanAway = false;
-	private int runAwayChance = 25;
+	private int runAwayChance = 35;
 
     // how far the player goes on each movement
     private const float MOVE_DISTANCE = 0.5f;
@@ -51,7 +53,7 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			firstPlayScreen.SetActive(true);
 			canMove = false;
-			PlayerPrefs.SetInt("notFirstTime", 1);
+			//PlayerPrefs.SetInt("notFirstTime", 1);
 		}
 	}
 
@@ -172,7 +174,16 @@ public class PlayerMovement : MonoBehaviour {
 				// change the view to the battle view and enable
 				// the HUD
 				//enterBattle();
-				preBattleScreen.SetActive(true);
+				if(PlayerPrefs.HasKey("notfirstBattle"))
+				{
+					preBattleScreen.SetActive(true);
+				}
+				else
+				{
+					firstBattleScreen.SetActive(true);
+					PlayerPrefs.SetInt("notfirstBattle", 1);
+				}
+				
 				
 				canMove = false;
 			}
@@ -239,6 +250,8 @@ public class PlayerMovement : MonoBehaviour {
 		fightButton.transform.position = pos;
 		runButton.SetActive(true);
 		preBattleScreen.SetActive(false);
+		firstBattleScreen.SetActive(false);
+		informationScreen.SetActive(false);
 		enterBattle();
 		canMove = true;
 	}
@@ -253,7 +266,7 @@ public class PlayerMovement : MonoBehaviour {
         else
         {
             
-            alreadyRanAway = true;
+            //alreadyRanAway = true;
             return false;
 
         }
@@ -279,6 +292,15 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
+	public void informationButton(){
+		informationScreen.SetActive(true);
+		canMove = false;
+	}
+
+	public void backButton(){
+		informationScreen.SetActive(false);
+		canMove = true;
+	}
 	public void backToAdventureButtonAction(){
 		adventureButton.SetActive(false);
 		fightButton.SetActive(true);
