@@ -12,7 +12,7 @@ enum CursorSpot {
 
 public class ButtonsUsingKeyboard : MonoBehaviour {
 
-
+	static public bool isFighting;
 	private Button topLeft;
 	private Button topRight;
 	private Button botLeft;
@@ -39,6 +39,7 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 		blS.gameObject.SetActive(false);
 		brS.gameObject.SetActive(false);
 		cs = CursorSpot.TopLeft;
+		isFighting = true;
 		topLeft.transform.Find("Image").gameObject.GetComponent<Image>().sprite = cursor;
 	}
 
@@ -49,78 +50,88 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.UpArrow))
+		if (isFighting)
 		{
-			switch (cs) {
-				case CursorSpot.BotLeft:
-					toggleCursor();
-					cs = CursorSpot.TopLeft;
-					toggleCursor();
-					break;
-				case CursorSpot.BotRight:
-					toggleCursor();
-					cs = CursorSpot.TopRight;
-					toggleCursor();
-					break;
-				default:
-					break;
-			}
-		}
-		else if (Input.GetKeyDown(KeyCode.DownArrow))
-		{
-			switch (cs) {
-				case CursorSpot.TopLeft:
-					toggleCursor();
-					cs = CursorSpot.BotLeft;
-					toggleCursor();
-					break;
-				case CursorSpot.TopRight:
-					toggleCursor();
-					cs = CursorSpot.BotRight;
-					toggleCursor();
-					break;
-				default:
-					break;
-			}
-		}
-		else if (Input.GetKeyDown(KeyCode.LeftArrow))
-		{
-			switch (cs) {
-				case CursorSpot.BotRight:
-					toggleCursor();
-					cs = CursorSpot.BotLeft;
-					toggleCursor();
-					break;
-				case CursorSpot.TopRight:
-					toggleCursor();
-					cs = CursorSpot.TopLeft;
-					toggleCursor();
-					break;
-				default:
-					break;
-			}
-		}
-		else if (Input.GetKeyDown(KeyCode.RightArrow))
-		{
-			switch (cs)
+			if (Input.GetKeyDown(KeyCode.UpArrow))
 			{
-				case CursorSpot.BotLeft:
-					toggleCursor();
-					cs = CursorSpot.BotRight;
-					toggleCursor();
-					break;
-				case CursorSpot.TopLeft:
-					toggleCursor();
-					cs = CursorSpot.TopRight;
-					toggleCursor();
-					break;
-				default:
-					break;
+				switch (cs) {
+					case CursorSpot.BotLeft:
+						toggleCursor();
+						cs = CursorSpot.TopLeft;
+						toggleCursor();
+						break;
+					case CursorSpot.BotRight:
+						toggleCursor();
+						cs = CursorSpot.TopRight;
+						toggleCursor();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.DownArrow))
+			{
+				switch (cs) {
+					case CursorSpot.TopLeft:
+						toggleCursor();
+						cs = CursorSpot.BotLeft;
+						toggleCursor();
+						break;
+					case CursorSpot.TopRight:
+						toggleCursor();
+						cs = CursorSpot.BotRight;
+						toggleCursor();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.LeftArrow))
+			{
+				switch (cs) {
+					case CursorSpot.BotRight:
+						toggleCursor();
+						cs = CursorSpot.BotLeft;
+						toggleCursor();
+						break;
+					case CursorSpot.TopRight:
+						toggleCursor();
+						cs = CursorSpot.TopLeft;
+						toggleCursor();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				switch (cs)
+				{
+					case CursorSpot.BotLeft:
+						toggleCursor();
+						cs = CursorSpot.BotRight;
+						toggleCursor();
+						break;
+					case CursorSpot.TopLeft:
+						toggleCursor();
+						cs = CursorSpot.TopRight;
+						toggleCursor();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+			{
+				Combat.performButtonAction(getButtonFromCursorSpot());
 			}
 		}
-		else if (Input.GetKeyDown(KeyCode.Return))
+		else
 		{
-			Combat.performButtonAction(getButtonFromCursorSpot());
+			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+			{
+				Combat.BackToCave();
+			}
 		}
 	}
 

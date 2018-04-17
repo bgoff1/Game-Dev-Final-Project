@@ -52,14 +52,15 @@ public class PlayerMovement : MonoBehaviour {
 		if(!PlayerPrefs.HasKey("notFirstTime"))
 		{
 			firstPlayScreen.SetActive(true);
+			firstPlayScreen.GetComponentInChildren<Button>().onClick.AddListener(letsGoButtonAction);
 			canMove = false;
 			//PlayerPrefs.SetInt("notFirstTime", 1);
 		}
 	}
 
 	void FixedUpdate () {
-
-		if (!isMoving && caveCamera.isActiveAndEnabled && canMove)
+		
+		if (!isMoving && caveCamera.isActiveAndEnabled && canMove && !firstPlayScreen.activeSelf)
         {
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
@@ -98,9 +99,9 @@ public class PlayerMovement : MonoBehaviour {
 			{
 				playerCollider.enabled = false;
 			}
-
-			
-        }
+		}
+		else if (firstPlayScreen.activeSelf && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)))
+			letsGoButtonAction();
     }
 
     private void startMovingPlayer()
@@ -237,14 +238,16 @@ public class PlayerMovement : MonoBehaviour {
 		arrowDirections.SetActive(false);
 		arrows.SetActive(false);
 	}
+
 	public void letsGoButtonAction()
 	{
 		firstPlayScreen.SetActive(false);
 		canMove = true;
 		arrowDirections.SetActive(true);
 		arrows.SetActive(true);
-		Invoke("turnOffArrows", 3);
+		Invoke("turnOffArrows", 1.5f);
 	}
+
     public void fightButtonAction()
 	{
 		GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU ENCOUNTERED AN ENEMY!";

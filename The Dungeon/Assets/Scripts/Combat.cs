@@ -56,6 +56,7 @@ public class Combat : MonoBehaviour {
 
 
 
+
     private void setupUI()
 	{
 		enemyDisplay = transform.parent.Find("Enemy Display").gameObject;
@@ -92,6 +93,10 @@ public class Combat : MonoBehaviour {
                     break;
             }
         }
+		battlePanel.SetActive(true);
+		Button bu = battlePanel.GetComponentInChildren<Button>();
+		bu.onClick.AddListener(BackToCave);
+		battlePanel.SetActive(false);
     }
 
 	private void setUpMonsters()
@@ -156,10 +161,12 @@ public class Combat : MonoBehaviour {
 
 	static private void drinkPotion()
 	{
-		player.drinkPotion();
-		strongAttackCD--;
-		shieldCD--;
-
+		if (enemy != null)
+		{
+			player.drinkPotion();
+			strongAttackCD--;
+			shieldCD--;	
+		}
 	}
 
 	static private void callShield(){
@@ -184,10 +191,8 @@ public class Combat : MonoBehaviour {
 				if (enemy.tag == "Boss")
 				{
 					WinZone.winGame();
-				}
-				else {
-					battlePanel.SetActive(true);
-				}
+				} else 
+					showBattlePanel();
             }
         }
     }
@@ -202,12 +207,21 @@ public class Combat : MonoBehaviour {
 			// if enemy was killed
 			if (player.enemySlain && enemy.playerDead == false)
 			{
-				battlePanel.SetActive(true);
+				if (enemy.tag == "Boss") {
+					WinZone.winGame();
+				} else
+					showBattlePanel();
 			}
 		}
 	}
 
-    public void BackToCave()
+	static public void showBattlePanel()
+	{
+		battlePanel.SetActive(true);
+		ButtonsUsingKeyboard.isFighting = false;
+	}
+
+    static public void BackToCave()
     {
         battlePanel.SetActive(false);
         enemy = null;
@@ -215,7 +229,7 @@ public class Combat : MonoBehaviour {
         // change view back to cave
         battleCamera.gameObject.SetActive(false);
         caveCamera.gameObject.SetActive(true);
-        // hide ui
+        // hide UI
         player.display.SetActive(false);
         enemyDisplay.SetActive(false);
         s.SetActive(false);
@@ -223,23 +237,25 @@ public class Combat : MonoBehaviour {
 
 	static public void spawnEnemy()
     {
-        gEnemy.GetComponent<SpriteRenderer>().sprite = enemies[Random.Range(0, enemies.Length)];
+        gEnemy.GetComponent<SpriteRenderer>().sprite = enemies[Random.Range(0, enemies.Length - 1)];
         if (enemy == null)
         {
             enemy = s.AddComponent<Enemy>();
             enemy.setUp(gEnemy, enemyDisplay, loseScreen);
+			ButtonsUsingKeyboard.isFighting = true;
         }
     }
 
 	static public void spawnBoss()
 	{
-		gEnemy.GetComponent<SpriteRenderer>().sprite = enemies [Random.Range(0, enemies.Length)];
+		gEnemy.GetComponent<SpriteRenderer>().sprite = enemies [Random.Range(0, enemies.Length - 1)];
 		if (enemy == null)
 		{
 			enemy = s.AddComponent<Enemy>();
 			enemy.setUp(gEnemy, enemyDisplay, loseScreen);
 			enemy.upgradeToBoss();
 			enemy.tag = "Boss";
+			ButtonsUsingKeyboard.isFighting = true;
 		}
 	}
     
