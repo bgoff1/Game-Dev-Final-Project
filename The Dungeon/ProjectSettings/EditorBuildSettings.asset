@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AdventureMode.unity
     guid: 692d7d2bc9725f94a818b8d5e16f53ae
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EndlessMode.unity
     guid: a34ef5f1dc54a014dab2f974b83ed7f4
   - enabled: 1
     path: Assets/Scenes/CharacterChoice.unity
     guid: 74119470726f8b64e9470806dfc58649
+  - enabled: 1
+    path: Assets/Scenes/Information.unity
+    guid: b3698baec6b89a84593df5cf6e4d59d1
