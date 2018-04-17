@@ -170,6 +170,7 @@ public class Combat : MonoBehaviour {
 			player.shield();
 		}
 	}
+
 	static private void attack()
     {
         if (enemy != null)
@@ -180,7 +181,13 @@ public class Combat : MonoBehaviour {
 			// if enemy was killed
             if (player.enemySlain && enemy.playerDead == false)
             {
-                battlePanel.SetActive(true);
+				if (enemy.tag == "Boss")
+				{
+					WinZone.winGame();
+				}
+				else {
+					battlePanel.SetActive(true);
+				}
             }
         }
     }
@@ -223,5 +230,17 @@ public class Combat : MonoBehaviour {
             enemy.setUp(gEnemy, enemyDisplay, loseScreen);
         }
     }
+
+	static public void spawnBoss()
+	{
+		gEnemy.GetComponent<SpriteRenderer>().sprite = enemies [Random.Range(0, enemies.Length)];
+		if (enemy == null)
+		{
+			enemy = s.AddComponent<Enemy>();
+			enemy.setUp(gEnemy, enemyDisplay, loseScreen);
+			enemy.upgradeToBoss();
+			enemy.tag = "Boss";
+		}
+	}
     
 }

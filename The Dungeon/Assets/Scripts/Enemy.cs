@@ -65,4 +65,13 @@ public class Enemy : Character {
             b.interactable = false;
         }
     }
+
+	public void upgradeToBoss()
+	{
+		attackDamage *= 2;
+		health.maxValue *= 2;
+		health.value = health.maxValue;
+		level *= 10;
+		updateHealthText();
+	}
 }

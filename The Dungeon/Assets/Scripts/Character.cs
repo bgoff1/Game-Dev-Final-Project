@@ -13,7 +13,8 @@ public abstract class Character : MonoBehaviour {
     public Slider health;
     public string charName;
     public Text gameText;
-    public Text healthText;
+	public Text healthText;
+	public int numHealthPotions = 3;
 
     private GameObject enemyIcon;
     private GameObject playerIcon;
@@ -45,10 +46,16 @@ public abstract class Character : MonoBehaviour {
 
     virtual public void attack(Character c)
     {
-        int damageDealt = 0;
+        int damageTaken = 0;
 
-		damageDealt = Random.Range(0, attackDamage);
-        int damageTaken = Random.Range(0, c.attackDamage);
+		int damageDealt = Random.Range(0, attackDamage);
+
+		if (c.tag == "Boss" && c.health.value < c.health.maxValue / 3 && c.numHealthPotions > 0) {
+			c.health.value += 25;
+			c.numHealthPotions--;
+		} else {
+			damageTaken = Random.Range(0, c.attackDamage);
+		}
         
         health.value -= damageTaken;
         c.health.value -= damageDealt;

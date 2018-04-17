@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour {
 			}
 			else
 			{
-				playerCollider.enabled =false;
+				playerCollider.enabled = false;
 			}
 
 			
@@ -232,18 +232,21 @@ public class PlayerMovement : MonoBehaviour {
         isMoving = false;
     }
 
-	private void turnOffArrows(){
+	private void turnOffArrows()
+	{
 		arrowDirections.SetActive(false);
 		arrows.SetActive(false);
 	}
-	public void letsGoButtonAction(){
+	public void letsGoButtonAction()
+	{
 		firstPlayScreen.SetActive(false);
 		canMove = true;
 		arrowDirections.SetActive(true);
 		arrows.SetActive(true);
 		Invoke("turnOffArrows", 3);
 	}
-    public void fightButtonAction(){
+    public void fightButtonAction()
+	{
 		GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU ENCOUNTERED AN ENEMY!";
 		Vector3 pos = fightButton.transform.position;
 		pos.x = 400;
@@ -271,7 +274,9 @@ public class PlayerMovement : MonoBehaviour {
 
         }
     }
-	public void runButtonAction(){
+
+	public void runButtonAction()
+	{
 		bool success = runAway();
 		
 		if(success)
@@ -281,7 +286,7 @@ public class PlayerMovement : MonoBehaviour {
 			runButton.SetActive(false);
 			adventureButton.SetActive(true);
 		}
-		else{
+		else {
 			GameObject.Find("preBattleText").GetComponent<Text>().text = "YOU CAN'T GET AWAY! YOU WILL HAVE TO FIGHT.";
 			Vector3 pos = fightButton.transform.position;
 			pos.x = 500;
@@ -292,16 +297,20 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	public void informationButton(){
+	public void informationButton()
+	{
 		informationScreen.SetActive(true);
 		canMove = false;
 	}
 
-	public void backButton(){
+	public void backButton()
+	{
 		informationScreen.SetActive(false);
 		canMove = true;
 	}
-	public void backToAdventureButtonAction(){
+
+	public void backToAdventureButtonAction()
+	{
 		adventureButton.SetActive(false);
 		fightButton.SetActive(true);
 		runButton.SetActive(true);
@@ -309,6 +318,7 @@ public class PlayerMovement : MonoBehaviour {
 		preBattleScreen.SetActive(false);
 		canMove = true;
 	}
+
     public void enterBattle()
 	{
 		caveCamera.gameObject.SetActive(false);
@@ -318,6 +328,16 @@ public class PlayerMovement : MonoBehaviour {
         enemyDisplay.SetActive(true);
 		Combat.spawnEnemy();
     }
+
+	public void enterBossBattle()
+	{
+		caveCamera.gameObject.SetActive(false);
+		battleCamera.gameObject.SetActive(true);
+		playerHUD.SetActive(true);
+		playerDisplay.SetActive(true);
+		enemyDisplay.SetActive(true);
+		Combat.spawnBoss();
+	}
 }
 
 enum Direction

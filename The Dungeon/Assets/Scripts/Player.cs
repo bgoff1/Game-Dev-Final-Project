@@ -11,7 +11,6 @@ public class Player : Character {
     private int healthPotionHealAmount = 30;
     private int healthPotionDropChance = 35; //Percentage
     private int maxHealthPotions = 5;
-    private int numHealthPotions = 3;
     private int potionHealGain = 10;
     private Character recentlySlainEnemy;
     private float totalXP;
@@ -22,7 +21,8 @@ public class Player : Character {
     private const float TIME_DELAY = 0.01f;
     
     public bool enemySlain = false;
-       public void Awake()
+
+    public void Awake()
     {
         
         setUpVariables();
@@ -82,6 +82,7 @@ public class Player : Character {
     public void shield(){
         gameText.text = "You used a shield. Neither you nor the enemy took damage this turn";
     }
+
     public override void attack(Character c)
     {
 		gameText.text = "";

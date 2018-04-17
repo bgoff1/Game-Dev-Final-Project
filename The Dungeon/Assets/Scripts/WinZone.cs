@@ -8,15 +8,27 @@ public class WinZone : MonoBehaviour {
 	public Camera caveCamera;
 	public Camera winCamera;
     public GameObject menuButton;
+	public static WinZone S;
+
+	void Awake()
+	{
+		S = this;
+	}
+
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.name == "Player")
 		{
-			caveCamera.gameObject.SetActive(false);
-            menuButton.SetActive(false);
-			winCamera.gameObject.SetActive(true);
-			winScreen.gameObject.SetActive(true);
+			other.GetComponent<PlayerMovement>().enterBossBattle();
 		}
+	}
+
+	public static void winGame()
+	{
+		S.caveCamera.gameObject.SetActive(false);
+		S.menuButton.SetActive(false);
+		S.winCamera.gameObject.SetActive(true);
+		S.winScreen.gameObject.SetActive(true);
 	}
 }
