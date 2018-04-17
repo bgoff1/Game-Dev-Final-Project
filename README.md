@@ -19,13 +19,15 @@ and using the arrow keys.
     >      c. Extra fighting abilities
     >      d. Cheat codes
     >      e. Tutorial
+    >      f. Music
    
     >  Judah - 
     >
     >      a. Walls
     >      b. Fight
     >      c. Keyboard input for fight
-    >      d. End
-    >      e. Music
+    >      d. Teleportation using ladders
+    >      e. End boss
+    >      f. Found & imported character and enemy sprites 
     
 5. Percentage of work contribution - 50/50
