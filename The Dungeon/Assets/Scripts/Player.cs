@@ -18,7 +18,9 @@ public class Player : Character {
 	private Slider experience;
 
     private const float TIME_DELAY = 0.01f;
-    
+    public AudioClip potionSound;
+    public AudioClip swordSound;
+    private AudioSource source;
     public bool enemySlain = false;
 	public GameObject display;
 
@@ -27,6 +29,7 @@ public class Player : Character {
         updatePotionCount();
         setUpVariables();
         setUpUI();
+        source = GetComponent<AudioSource>();
     }
 
     public override void setUpUI()
@@ -85,6 +88,7 @@ public class Player : Character {
 
     public override void attack(Character c)
     {
+        source.PlayOneShot(swordSound);
 		gameText.text = "";
         float startEnemyHP = c.health.value;
         base.attack(c);
@@ -122,6 +126,7 @@ public class Player : Character {
 
 	public void strongAttack(Character c)
 	{
+        source.PlayOneShot(swordSound);
 		gameText.text = "";
 		float startEnemyHP = c.health.value;
 		int damageDealt = Random.Range(attackDamage, attackDamage * Mathf.FloorToInt(1.5f));
@@ -254,6 +259,7 @@ public class Player : Character {
     {
         if (numHealthPotions > 0)
         {
+            source.PlayOneShot(potionSound);
             health.value += healthPotionHealAmount;
             updateHealthText();
             numHealthPotions--;

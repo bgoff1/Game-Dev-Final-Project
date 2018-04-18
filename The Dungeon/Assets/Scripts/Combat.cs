@@ -40,6 +40,8 @@ public class Combat : MonoBehaviour {
 	#endregion
     #endregion
 
+	public AudioClip potionSound;
+	public AudioClip swordSound;
 	void Awake()
     {
 		s = this.gameObject;
@@ -53,6 +55,8 @@ public class Combat : MonoBehaviour {
         setupButtons();
         setUpMonsters();
 		fightStart();
+		player.potionSound = potionSound;
+		player.swordSound = swordSound;
         //fightOptions();
     }
 
@@ -206,6 +210,7 @@ public class Combat : MonoBehaviour {
 	{
 		if (enemy != null)
 		{
+			
 			player.drinkPotion();
 			strongAttackCD--;
 			shieldCD--;	
