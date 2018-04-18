@@ -24,7 +24,7 @@ public class Player : Character {
 
     public void Awake()
     {
-        
+        updatePotionCount();
         setUpVariables();
         setUpUI();
     }

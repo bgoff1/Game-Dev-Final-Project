@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour {
 		//PlayerPrefs.DeleteAll();
         caveCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
 		playerCollider = GetComponent<BoxCollider2D>();
+        informationScreen.GetComponentInChildren<Button>().onClick.AddListener(backButton);
 		if(!PlayerPrefs.HasKey("notFirstTime"))
 		{
 			firstPlayScreen.SetActive(true);
