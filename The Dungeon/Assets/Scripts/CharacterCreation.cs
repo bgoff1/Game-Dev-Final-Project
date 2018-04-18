@@ -7,10 +7,9 @@ public class CharacterCreation : MonoBehaviour
 {
 
     #region variables
-    public GameObject characterHUD;
-    public GameObject characterDisplay;
+	public Button submitButton;
+	public Button backButton;
     public GameObject input;
-    public GameObject caveBackground;
     public Sprite maleSprite;
     public Sprite femaleSprite;
 
@@ -22,6 +21,15 @@ public class CharacterCreation : MonoBehaviour
     {
         registerButtons();
     }
+
+	void FixedUpdate()
+	{
+		if (submitButton.gameObject.activeSelf)
+		{
+			if (Input.GetKeyDown(KeyCode.Return))
+				getName();
+		}
+	}
 
     private void registerButtons()
     {
@@ -37,6 +45,8 @@ public class CharacterCreation : MonoBehaviour
                 femaleButton = b;
             }
         }
+		backButton.onClick.AddListener(goBack);
+		submitButton.onClick.AddListener(getName);
         maleButton.onClick.AddListener(setMaleCharacter);
         femaleButton.onClick.AddListener(setFemaleCharacter);
     }
@@ -44,7 +54,6 @@ public class CharacterCreation : MonoBehaviour
     private void setMaleCharacter()
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = maleSprite;
-        //  GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = maleSprite;
         PlayerPrefs.SetString("gender", "male");
         getCharacterName();
     }
@@ -53,7 +62,6 @@ public class CharacterCreation : MonoBehaviour
     {
         GameObject.Find("Character").GetComponent<SpriteRenderer>().sprite = femaleSprite;
         PlayerPrefs.SetString("gender", "female");
-       // GameObject.Find("Player").GetComponent<SpriteRenderer>().sprite = femaleSprite;
         getCharacterName();
         
     }
@@ -61,21 +69,29 @@ public class CharacterCreation : MonoBehaviour
     private void getCharacterName()
     {
         gameObject.GetComponentInChildren<Text>().text = "ENTER CHARACTER NAME";
-        Button[] buttons = gameObject.GetComponentsInChildren<Button>();
-        foreach (Button b in buttons) { b.gameObject.SetActive(false); }
+		maleButton.gameObject.SetActive(false);
+		femaleButton.gameObject.SetActive(false);
         input.SetActive(true);
-        input.GetComponentInChildren<Button>().onClick.AddListener(getName);
+		backButton.gameObject.SetActive(true);
     }
 
     private void getName()
     {
         gameObject.SetActive(false);
-        caveBackground.SetActive(true);
-        //characterDisplay.SetActive(true);
-        characterDisplay.GetComponentInChildren<Text>().text = input.GetComponent<InputField>().text.ToUpper();
         PlayerPrefs.SetString("playerName", input.GetComponent<InputField>().text.ToUpper());
-        // characterHUD.SetActive(true);
         input.SetActive(false);
-        SceneManager.LoadScene(PlayerPrefs.GetString("mode"));
+		string gameMode = PlayerPrefs.GetString("mode");
+		if (gameMode == "")
+			gameMode = "AdventureMode";
+        SceneManager.LoadScene(gameMode);
     }
+
+	private void goBack()
+	{
+		gameObject.GetComponentInChildren<Text>().text = "ARE YOU MALE\n OR FEMALE?";
+		maleButton.gameObject.SetActive(true);
+		femaleButton.gameObject.SetActive(true);
+		input.SetActive(false);
+		backButton.gameObject.SetActive(false);
+	}
 }
