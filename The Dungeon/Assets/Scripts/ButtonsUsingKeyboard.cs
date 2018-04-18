@@ -64,6 +64,16 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 		{
 			result -= 2;
 		}
+		if (result == 2)
+		{
+			// resets the cursor spot if there are only 2 active buttons
+			if (cs != CursorSpot.TopLeft && cs != CursorSpot.TopRight)
+			{
+				toggleCursor();
+				cs = CursorSpot.TopLeft;
+				toggleCursor();
+			}
+		}
 		return result;
 	}
 
