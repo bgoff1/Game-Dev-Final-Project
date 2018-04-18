@@ -21,10 +21,11 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 	private Image trS;
 	private Image blS;
 	private Image brS;
+	private int buttonCount;
 	private CursorSpot cs;
 	private Sprite cursor;
 
-	void Start() 
+	void Awake() 
 	{
 		topLeft = transform.Find("TopButtons").Find("TopLeft").gameObject.GetComponent<Button>();
 		topRight = transform.Find("TopButtons").transform.Find("TopRight").gameObject.GetComponent<Button>();
@@ -39,7 +40,7 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 		blS.gameObject.SetActive(false);
 		brS.gameObject.SetActive(false);
 		cs = CursorSpot.TopLeft;
-		isFighting = true;
+		isFighting = false;
 		topLeft.transform.Find("Image").gameObject.GetComponent<Image>().sprite = cursor;
 	}
 
@@ -48,9 +49,31 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 		return b.transform.Find("Image").GetComponent<Image>();
 	}
 
+	private int getActiveButtonCount()
+	{
+		int result = 0;
+		if (topLeft.gameObject.activeSelf)
+			result++;
+		if (topRight.gameObject.activeSelf)
+			result++;
+		if (botLeft.gameObject.activeSelf)
+			result++;
+		if (botRight.gameObject.activeSelf)
+			result++;
+		if (!botLeft.transform.parent.gameObject.activeSelf)
+		{
+			result -= 2;
+		}
+		return result;
+	}
+
 	private void Update()
 	{
 		if (isFighting)
+		{
+			buttonCount = getActiveButtonCount();
+		}
+		if (isFighting && buttonCount > 2)
 		{
 			if (Input.GetKeyDown(KeyCode.UpArrow))
 			{
@@ -124,6 +147,31 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 			else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
 			{
 				Combat.performButtonAction(getButtonFromCursorSpot());
+			}
+		}
+		else if (isFighting && buttonCount == 2)
+		{
+			if (Input.GetKeyDown(KeyCode.LeftArrow))
+			{
+				if (cs == CursorSpot.TopRight)
+				{
+					toggleCursor();
+					cs = CursorSpot.TopLeft;
+					toggleCursor();
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				if (cs == CursorSpot.TopLeft)
+				{
+					toggleCursor();
+					cs = CursorSpot.TopRight;
+					toggleCursor();
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+			{
+				Combat.performFirstAction(getButtonFromCursorSpot());
 			}
 		}
 		else

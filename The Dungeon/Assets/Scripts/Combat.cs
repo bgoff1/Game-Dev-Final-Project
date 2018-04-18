@@ -30,6 +30,7 @@ public class Combat : MonoBehaviour {
 	static private GameObject s;
     static public GameObject battlePanel;
 
+	static private int runAwayChance = 30;
 	static private int strongAttackCD = 0;
 	static private int shieldCD = 0;
     static private Sprite boss;
@@ -51,11 +52,9 @@ public class Combat : MonoBehaviour {
 		setupUI();
         setupButtons();
         setUpMonsters();
-        fight();
+		fightStart();
+        //fightOptions();
     }
-
-
-
 
     private void setupUI()
 	{
@@ -120,9 +119,26 @@ public class Combat : MonoBehaviour {
 		}
 	}
 
-    private void fight()
+	private void fightStart()
+	{
+		gameText.text = " ";
+		fightScreenOne();
+	}
+
+	static private void fightScreenOne()
+	{
+		removeListenersOnButtons();
+		botLeft.transform.parent.gameObject.SetActive(false);
+		topLeft.GetComponentInChildren<Text>().text = "FIGHT";
+		topLeft.onClick.AddListener(fightScreenTwo);
+		topRight.GetComponentInChildren<Text>().text = "RUN AWAY";
+		topRight.onClick.AddListener(runAway);
+	}
+
+    static private void fightScreenTwo()
     {
-        gameText.text = " ";
+		removeListenersOnButtons();
+		botLeft.transform.parent.gameObject.gameObject.SetActive(true);
         topLeft.GetComponentInChildren<Text>().text = "ATTACK";
         topLeft.onClick.AddListener(attack);
         topRight.GetComponentInChildren<Text>().text = "DRINK POTION";
@@ -132,6 +148,26 @@ public class Combat : MonoBehaviour {
 		botRight.GetComponentInChildren<Text>().text = "SHIELD";
         botRight.onClick.AddListener(callShield);
     }
+
+	static private void removeListenersOnButtons()
+	{
+		topLeft.onClick.RemoveAllListeners();
+		topRight.onClick.RemoveAllListeners();
+		botLeft.onClick.RemoveAllListeners();
+		botRight.onClick.RemoveAllListeners();
+	}
+
+	static public void performFirstAction(Button button)
+	{
+		if (button == topLeft)
+		{
+			fightScreenTwo();
+		}
+		else if (button == topRight)
+		{
+			runAway();
+		}
+	}
 
 	static public void performButtonAction(Button button)
 	{
@@ -159,10 +195,11 @@ public class Combat : MonoBehaviour {
 			{
 				callShield();
 			}
-			else{
+			else {
 				player.shieldFail(shieldCD);
 			}
 		}
+		fightScreenOne();
 	}
 
 	static private void drinkPotion()
@@ -218,6 +255,25 @@ public class Combat : MonoBehaviour {
 				} else
 					showBattlePanel();
 			}
+		}
+	}
+
+	static private void runAway()
+	{
+		if (enemy != null)
+		{
+			if (Random.Range(0, 100) < runAwayChance) 
+			{
+				Destroy(enemy);
+				showBattlePanel();
+				if (battlePanel.GetComponentInChildren<Text>().name == "Win")
+					battlePanel.GetComponentInChildren<Text>().text = "YOU RAN AWAY FROM BATTLE!";
+			}
+			else
+			{
+				player.runAwayFail(enemy);
+			}
+			
 		}
 	}
 

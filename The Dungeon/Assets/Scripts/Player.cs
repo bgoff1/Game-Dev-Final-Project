@@ -14,13 +14,13 @@ public class Player : Character {
     private int potionHealGain = 10;
     private Character recentlySlainEnemy;
     private float totalXP;
-	public GameObject display;
     private int enemyExperienceReward = 1;
-    private Slider experience;    
+	private Slider experience;
 
     private const float TIME_DELAY = 0.01f;
     
     public bool enemySlain = false;
+	public GameObject display;
 
     public void Awake()
     {
@@ -108,11 +108,23 @@ public class Player : Character {
         }
     }
 
+	public void runAwayFail(Character c)
+	{
+		int damageTaken = Random.Range(5, (c.attackDamage * 2) / 3);
+		health.value -= damageTaken;
+
+		gameText.text = "You failed to escape and took " + damageTaken + " damage.";
+
+		updateHealthText();
+		if (health.value < 1)
+			c.death(this);
+	}
+
 	public void strongAttack(Character c)
 	{
 		gameText.text = "";
 		float startEnemyHP = c.health.value;
-		int damageDealt = Random.Range(attackDamage, attackDamage * Mathf.FloorToInt((float)1.5));
+		int damageDealt = Random.Range(attackDamage, attackDamage * Mathf.FloorToInt(1.5f));
 		int damageTaken = Random.Range(0, c.attackDamage);
 
 		health.value -= damageTaken;
@@ -124,6 +136,8 @@ public class Player : Character {
 		{
 			death(c);
 		}
+		if (health.value < 1)
+			c.death(this);
 		Invoke("characterDisappear", 0.05f);
 	}
 
@@ -252,6 +266,4 @@ public class Player : Character {
             gameText.text = gameText.text.ToUpper();
         }
     }
-
-    
 }

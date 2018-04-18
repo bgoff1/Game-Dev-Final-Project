@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector3 midPos;
 	private Vector3 charPosition;
 
-	private bool alreadyRanAway = false;
 	private int runAwayChance = 35;
 
     // how far the player goes on each movement
@@ -92,7 +91,8 @@ public class PlayerMovement : MonoBehaviour {
                 transform.position = new Vector3((float)-25.05, (float)-1.21, 0);
             }
 
-			if((transform.position.x <= 7.5 && transform.position.x >= 7 && transform.position.y <= 10.5 && transform.position.y >= 10) || (transform.position.x <= -24.5 && transform.position.x >= -25.25 && transform.position.y <= -1.5 && transform.position.y >= -2.25))
+			if((transform.position.x <= 7.5 && transform.position.x >= 7 && transform.position.y <= 10.5 && transform.position.y >= 10) || 
+				(transform.position.x <= -24.5 && transform.position.x >= -25.25 && transform.position.y <= -1.5 && transform.position.y >= -2.25))
 			{
 				playerCollider.enabled = true;
 			}
@@ -178,16 +178,13 @@ public class PlayerMovement : MonoBehaviour {
 				//enterBattle();
 				if(PlayerPrefs.HasKey("notfirstBattle"))
 				{
-					preBattleScreen.SetActive(true);
+					enterBattle();
 				}
 				else
 				{
 					firstBattleScreen.SetActive(true);
 					PlayerPrefs.SetInt("notfirstBattle", 1);
 				}
-				
-				
-				canMove = false;
 			}
 			// otherwise, set where the player is going to move to,
 			// and start moving there
@@ -265,18 +262,13 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool runAway()
     {
-        if (Random.Range(0, 100) < runAwayChance && !alreadyRanAway) 
+        if (Random.Range(0, 100) < runAwayChance) 
         {
             runAwayChance -= 5;
             return true;
         }
         else
-        {
-            
-            //alreadyRanAway = true;
             return false;
-
-        }
     }
 
 	public void runButtonAction()
