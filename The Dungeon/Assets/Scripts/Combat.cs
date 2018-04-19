@@ -38,8 +38,10 @@ public class Combat : MonoBehaviour {
 	static public GameObject enemyDisplay;
 	static public GameObject loseScreen;
 	#endregion
-    #endregion
+	#endregion
 
+	static public Text SACD;
+	static public Text SCD;
 	public AudioClip potionSound;
 	public AudioClip swordSound;
 	void Awake()
@@ -57,7 +59,6 @@ public class Combat : MonoBehaviour {
 		fightStart();
 		player.potionSound = potionSound;
 		player.swordSound = swordSound;
-        //fightOptions();
     }
 
     private void setupUI()
@@ -83,16 +84,18 @@ public class Combat : MonoBehaviour {
             switch (b.name)
             {
                 case "TopLeft":
-                    topLeft = b;
-                    break;
+					topLeft = b;
+					break;
                 case "TopRight":
                     topRight = b;
                     break;
                 case "BotLeft":
                     botLeft = b;
+					setupCooldown(b);
                     break;
                 case "BotRight":
                     botRight = b;
+					setupCooldown(b);
                     break;
             }
         }
@@ -100,6 +103,33 @@ public class Combat : MonoBehaviour {
 		battlePanel.GetComponentInChildren<Button>().onClick.AddListener(BackToCave);
 		battlePanel.SetActive(false);
     }
+
+	private void setupCooldown(Button b)
+	{
+		Text[] texts = b.GetComponentsInChildren<Text>();
+		if (b.name == "BotLeft")
+		{
+			setCooldownText(texts, b.name);
+		}
+		else if (b.name == "BotRight")
+		{
+			setCooldownText(texts, b.name);
+		}
+	}
+
+	private void setCooldownText(Text[] texts, string bName)
+	{
+		foreach (Text t in texts)
+		{
+			if (t.name == "Cooldown")
+			{
+				if (bName == "BotLeft")
+					SACD = t;
+				else if (bName == "BotRight")
+					SCD = t;
+			}
+		}
+	}
 
 	private void setUpMonsters()
 	{
@@ -151,7 +181,15 @@ public class Combat : MonoBehaviour {
         botLeft.onClick.AddListener(strongAttack);
 		botRight.GetComponentInChildren<Text>().text = "SHIELD";
         botRight.onClick.AddListener(callShield);
-    }
+		updateCDTexts();
+
+	}
+
+	static void updateCDTexts()
+	{
+		updateShieldCDText();
+		updateStrongAttackCDText();
+	}
 
 	static private void removeListenersOnButtons()
 	{
@@ -198,11 +236,35 @@ public class Combat : MonoBehaviour {
 	{
 		if (enemy != null)
 		{
-			
 			player.drinkPotion();
 			strongAttackCD--;
-			shieldCD--;	
+			shieldCD--;
+			updateCDTexts();
 		}
+	}
+
+	static private void updateStrongAttackCDText()
+	{
+		if (strongAttackCD > 0)
+		{
+			if (!SACD.gameObject.activeSelf)
+				SACD.gameObject.SetActive(true);
+			SACD.text = "COOLDOWN: " + strongAttackCD + " turns";
+		}
+		else
+			SACD.gameObject.SetActive(false);
+	}
+
+	static private void updateShieldCDText()
+	{
+		if (shieldCD > 0)
+		{
+			if (!SCD.gameObject.activeSelf)
+				SCD.gameObject.SetActive(true);
+			SCD.text = "COOLDOWN: " + shieldCD + " turns";
+		}
+		else
+			SCD.gameObject.SetActive(false);
 	}
 
 	static private void callShield(){
@@ -213,6 +275,7 @@ public class Combat : MonoBehaviour {
 				shieldCD = 2;
 				strongAttackCD--;
 				player.shield();
+				updateCDTexts();
 			}
 			else
 			{
@@ -228,8 +291,9 @@ public class Combat : MonoBehaviour {
             player.attack(enemy);
 			shieldCD --;
 			strongAttackCD--;
+			updateCDTexts();
 			// if enemy was killed
-            if (player.enemySlain && enemy.playerDead == false)
+			if (player.enemySlain && enemy.playerDead == false)
             {
 				if (enemy.tag == "Boss")
 				{
@@ -249,8 +313,9 @@ public class Combat : MonoBehaviour {
                 player.strongAttack(enemy);
 			    shieldCD--;
 			    strongAttackCD = 3;
-			    // if enemy was killed
-			    if (player.enemySlain && enemy.playerDead == false)
+				updateCDTexts();
+				// if enemy was killed
+				if (player.enemySlain && enemy.playerDead == false)
 			    {
 				    if (enemy.tag == "Boss") {
 					    WinZone.winGame();
@@ -271,6 +336,7 @@ public class Combat : MonoBehaviour {
 		{
 			strongAttackCD--;
 			shieldCD--;
+			updateCDTexts();
 			if (enemy.tag != "Boss")
 			{
 				if (Random.Range(0, 100) < runAwayChance) 
@@ -289,7 +355,6 @@ public class Combat : MonoBehaviour {
 			{
 				player.runAwayBoss();
 			}
-			
 		}
 	}
 
