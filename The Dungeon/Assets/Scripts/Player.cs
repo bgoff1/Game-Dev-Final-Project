@@ -124,6 +124,11 @@ public class Player : Character {
 			c.death(this);
 	}
 
+	public void runAwayBoss()
+	{
+		gameText.text = "You cannot run away from a boss!";
+	}
+
 	public void strongAttack(Character c)
 	{
         source.PlayOneShot(swordSound);

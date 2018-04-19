@@ -25,6 +25,8 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 	private CursorSpot cs;
 	private Sprite cursor;
 
+	public GameObject winScreen;
+
 	void Awake() 
 	{
 		topLeft = transform.Find("TopButtons").Find("TopLeft").gameObject.GetComponent<Button>();
@@ -64,26 +66,34 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 		{
 			result -= 2;
 		}
-		if (result == 2)
+		/* if (result == 2)
 		{
 			// resets the cursor spot if there are only 2 active buttons
-			if (cs != CursorSpot.TopLeft && cs != CursorSpot.TopRight)
-			{
-				toggleCursor();
-				cs = CursorSpot.TopLeft;
-				toggleCursor();
-			}
-		}
+			resetCursorPosition();
+		} */
 		return result;
+	}
+
+	private void resetCursorPosition()
+	{
+		if (cs != CursorSpot.TopLeft)
+		{
+			toggleCursor();
+			cs = CursorSpot.TopLeft;
+			toggleCursor();
+		}
 	}
 
 	private void Update()
 	{
+		bool win = true;
 		if (isFighting)
 		{
 			buttonCount = getActiveButtonCount();
+			if (winScreen.activeSelf)
+				win = false;
 		}
-		if (isFighting && buttonCount > 2)
+		if (isFighting && buttonCount > 2 && win)
 		{
 			if (Input.GetKeyDown(KeyCode.UpArrow))
 			{
@@ -157,9 +167,10 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 			else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
 			{
 				Combat.performButtonAction(getButtonFromCursorSpot());
+				resetCursorPosition();
 			}
 		}
-		else if (isFighting && buttonCount == 2)
+		else if (isFighting && buttonCount == 2 && win)
 		{
 			if (Input.GetKeyDown(KeyCode.LeftArrow))
 			{
@@ -184,7 +195,7 @@ public class ButtonsUsingKeyboard : MonoBehaviour {
 				Combat.performFirstAction(getButtonFromCursorSpot());
 			}
 		}
-		else
+		else if (win)
 		{
 			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
 			{

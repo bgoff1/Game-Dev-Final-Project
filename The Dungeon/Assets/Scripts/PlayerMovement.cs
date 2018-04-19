@@ -82,11 +82,11 @@ public class PlayerMovement : MonoBehaviour {
                 moveDirection = Direction.West;
                 startMovingPlayer();
             }
-			else if (Input.GetKey(KeyCode.F))
+			else if (Input.GetKeyDown(KeyCode.F))
 			{
 				enterBattle();
 			}
-            else if (Input.GetKey(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.E))
             {
                 transform.position = new Vector3((float)-25.05, (float)-1.21, 0);
             }

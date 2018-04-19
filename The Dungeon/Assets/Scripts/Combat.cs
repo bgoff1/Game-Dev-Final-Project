@@ -267,16 +267,25 @@ public class Combat : MonoBehaviour {
 	{
 		if (enemy != null)
 		{
-			if (Random.Range(0, 100) < runAwayChance) 
+			strongAttackCD--;
+			shieldCD--;
+			if (enemy.tag != "Boss")
 			{
-				Destroy(enemy);
-				showBattlePanel();
-				if (battlePanel.GetComponentInChildren<Text>().name == "Win")
-					battlePanel.GetComponentInChildren<Text>().text = "YOU RAN AWAY FROM BATTLE!";
+				if (Random.Range(0, 100) < runAwayChance) 
+				{
+					Destroy(enemy);
+					showBattlePanel();
+					if (battlePanel.GetComponentInChildren<Text>().name == "Win")
+						battlePanel.GetComponentInChildren<Text>().text = "YOU RAN AWAY FROM BATTLE!";
+				}
+				else
+				{
+					player.runAwayFail(enemy);
+				}
 			}
-			else
+			else 
 			{
-				player.runAwayFail(enemy);
+				player.runAwayBoss();
 			}
 			
 		}
@@ -285,6 +294,8 @@ public class Combat : MonoBehaviour {
 	static public void showBattlePanel()
 	{
 		battlePanel.SetActive(true);
+		if (battlePanel.GetComponentInChildren<Text>().name == "Win")
+			battlePanel.GetComponentInChildren<Text>().text = "YOU WON THE BATTLE!";
 		ButtonsUsingKeyboard.isFighting = false;
 	}
 

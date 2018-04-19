@@ -363,7 +363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &42421574
@@ -397,7 +397,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: YOUR EXPERIENCE GOES UP WHEN YOU DEFEAT AN ENEMY. WHEN IT REACHES 100, YOU
     LEVEL UP.
@@ -947,7 +947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &136155646
@@ -981,7 +981,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: PROTECTS YOU FROM AN ENEMY STRIKE. NEITHER YOU NOR THE ENEMY TAKE DAMAGE.
     CAN ONLY BE USED EVERY TWO TURNS.
@@ -1545,8 +1545,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 388.47894, y: -369.4578}
-  m_SizeDelta: {x: 706.9579, y: 86.7155}
+  m_AnchoredPosition: {x: 459.02896, y: -315.20255}
+  m_SizeDelta: {x: 848.0579, y: 71.31914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &177446773
 MonoBehaviour:
@@ -3005,8 +3005,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 388.47897, y: -466.1733}
-  m_SizeDelta: {x: 706.9579, y: 86.7155}
+  m_AnchoredPosition: {x: 459.02896, y: -396.5217}
+  m_SizeDelta: {x: 848.0579, y: 71.31914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &415069399
 MonoBehaviour:
@@ -6779,7 +6779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &823554912
@@ -6813,7 +6813,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: PROTECTS YOU FROM AN ENEMY STRIKE. NEITHER YOU NOR THE ENEMY TAKE DAMAGE.
     CAN ONLY BE USED EVERY TWO TURNS.
@@ -6912,7 +6912,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &824723097
@@ -6946,7 +6946,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'TAKING A POTION HEALS YOU, RESTORING YOUR HEALTH. '
 --- !u!222 &824723098
@@ -8528,7 +8528,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 991032143}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!124 &991032146
 Behaviour:
   m_ObjectHideFlags: 0
@@ -8983,10 +8983,10 @@ RectTransform:
   - {fileID: 1780367755}
   - {fileID: 691891340}
   - {fileID: 1633772892}
-  - {fileID: 2112356723}
   - {fileID: 1181239527}
   - {fileID: 1123932137}
   - {fileID: 1563725442}
+  - {fileID: 2112356723}
   - {fileID: 420937460}
   - {fileID: 377593980}
   - {fileID: 1985081166}
@@ -9429,7 +9429,7 @@ RectTransform:
   m_Children:
   - {fileID: 464358276}
   m_Father: {fileID: 1048682892}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -9564,11 +9564,11 @@ RectTransform:
   m_Father: {fileID: 1432272818}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 600, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1134614707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9600,10 +9600,10 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: THERE IS A STRONG ATTACK AND A NORMAL ATTACK. NORMAL ATTACK CAN BE USED
-    EVERY TURN, BUT STRONG ATTACK CAN ONLY BE USED EVERY THREE TURNS
+    EVERY TURN, BUT STRONG ATTACK CAN ONLY BE USED EVERY THREE TURNS.
 --- !u!222 &1134614708
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9701,8 +9701,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 388.47894, y: -555.0751}
-  m_SizeDelta: {x: 706.9579, y: 71.08801}
+  m_AnchoredPosition: {x: 459.02896, y: -469.59753}
+  m_SizeDelta: {x: 848.0579, y: 54.83255}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1143572140
 MonoBehaviour:
@@ -9987,7 +9987,7 @@ RectTransform:
   - {fileID: 560490778}
   - {fileID: 456232712}
   m_Father: {fileID: 1048682892}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11278,6 +11278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0052f6482987373498f57a88101bcebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winScreen: {fileID: 2112356722}
 --- !u!1 &1401076335
 GameObject:
   m_ObjectHideFlags: 0
@@ -11411,8 +11412,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 388.47894, y: -178.05003}
-  m_SizeDelta: {x: 706.9579, y: 82.66906}
+  m_AnchoredPosition: {x: 459.02896, y: -154.77148}
+  m_SizeDelta: {x: 848.0579, y: 66.9047}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1432272819
 MonoBehaviour:
@@ -12449,7 +12450,7 @@ RectTransform:
   m_Children:
   - {fileID: 872656026}
   m_Father: {fileID: 1048682892}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -12966,8 +12967,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 388.47894, y: -83.35775}
-  m_SizeDelta: {x: 706.9579, y: 86.7155}
+  m_AnchoredPosition: {x: 459.02896, y: -75.65957}
+  m_SizeDelta: {x: 848.0579, y: 71.31914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1613983141
 MonoBehaviour:
@@ -16445,8 +16446,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 388.47894, y: -272.7423}
-  m_SizeDelta: {x: 706.9579, y: 86.7155}
+  m_AnchoredPosition: {x: 459.02896, y: -233.88342}
+  m_SizeDelta: {x: 848.0579, y: 71.31914}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2071287800
 MonoBehaviour:
@@ -16661,10 +16662,10 @@ RectTransform:
   - {fileID: 2051298003}
   - {fileID: 1492292198}
   m_Father: {fileID: 1048682892}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05, y: 0.025}
-  m_AnchorMax: {x: 0.95, y: 0.975}
+  m_AnchorMin: {x: 0.01, y: 0.01}
+  m_AnchorMax: {x: 0.99, y: 0.99}
   m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
