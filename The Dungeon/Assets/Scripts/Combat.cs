@@ -185,23 +185,11 @@ public class Combat : MonoBehaviour {
 		}
 		else if (button == botLeft)
 		{
-			if (strongAttackCD <= 0)
-			{
-				strongAttack();
-			}
-			else {
-				player.strongAttackFail(strongAttackCD);
-			}
+			strongAttack();
 		}
 		else if (button == botRight)
 		{
-			if(shieldCD <= 0)
-			{
-				callShield();
-			}
-			else {
-				player.shieldFail(shieldCD);
-			}
+			callShield();
 		}
 		fightScreenOne();
 	}
@@ -220,9 +208,16 @@ public class Combat : MonoBehaviour {
 	static private void callShield(){
 		if(enemy != null)
 		{
-			shieldCD = 2;
-			strongAttackCD--;
-			player.shield();
+			if (shieldCD <= 0)
+			{
+				shieldCD = 2;
+				strongAttackCD--;
+				player.shield();
+			}
+			else
+			{
+				player.shieldFail(shieldCD);
+			}
 		}
 	}
 
@@ -249,18 +244,25 @@ public class Combat : MonoBehaviour {
 	{
 		if (enemy != null)
 		{
-			player.strongAttack(enemy);
-			shieldCD--;
-			strongAttackCD = 3;
-			// if enemy was killed
-			if (player.enemySlain && enemy.playerDead == false)
-			{
-				if (enemy.tag == "Boss") {
-					WinZone.winGame();
-				} else
-					showBattlePanel();
-			}
-		}
+            if (strongAttackCD <= 0)
+            {           
+                player.strongAttack(enemy);
+			    shieldCD--;
+			    strongAttackCD = 3;
+			    // if enemy was killed
+			    if (player.enemySlain && enemy.playerDead == false)
+			    {
+				    if (enemy.tag == "Boss") {
+					    WinZone.winGame();
+				    } else
+					    showBattlePanel();
+			    }
+            }
+            else
+            {
+                player.strongAttackFail(strongAttackCD);
+            }
+        }
 	}
 
 	static private void runAway()
@@ -317,9 +319,9 @@ public class Combat : MonoBehaviour {
 
 	static public void spawnEnemy()
     {
-        gEnemy.GetComponent<SpriteRenderer>().sprite = enemies[Random.Range(0, enemies.Length - 1)];
         if (enemy == null)
         {
+			gEnemy.GetComponent<SpriteRenderer>().sprite = enemies[Random.Range(0, enemies.Length - 1)];
             enemy = s.AddComponent<Enemy>();
             enemy.setUp(gEnemy, enemyDisplay, loseScreen);
 			ButtonsUsingKeyboard.isFighting = true;
@@ -328,9 +330,9 @@ public class Combat : MonoBehaviour {
 
 	static public void spawnBoss()
 	{
-		gEnemy.GetComponent<SpriteRenderer>().sprite = boss;
 		if (enemy == null)
 		{
+			gEnemy.GetComponent<SpriteRenderer>().sprite = boss;
 			enemy = s.AddComponent<Enemy>();
 			enemy.setUp(gEnemy, enemyDisplay, loseScreen);
 			enemy.upgradeToBoss();

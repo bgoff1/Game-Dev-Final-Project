@@ -45,7 +45,10 @@ public class PlayerMovement : MonoBehaviour {
 	private BoxCollider2D playerCollider;
     void Start()
     {
+		// clears playerprefs
 		//PlayerPrefs.DeleteAll();
+
+
         caveCamera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
 		playerCollider = GetComponent<BoxCollider2D>();
         informationScreen.GetComponentInChildren<Button>().onClick.AddListener(backButton);
@@ -54,7 +57,7 @@ public class PlayerMovement : MonoBehaviour {
 			firstPlayScreen.SetActive(true);
 			firstPlayScreen.GetComponentInChildren<Button>().onClick.AddListener(letsGoButtonAction);
 			canMove = false;
-			//PlayerPrefs.SetInt("notFirstTime", 1);
+			PlayerPrefs.SetInt("notFirstTime", 1);
 		}
 	}
 
@@ -94,8 +97,8 @@ public class PlayerMovement : MonoBehaviour {
 			if((transform.position.x <= 7.5 && transform.position.x >= 7 && transform.position.y <= 10.5 && transform.position.y >= 10) || 
 				(transform.position.x <= -24.5 && transform.position.x >= -25.25 && transform.position.y <= -1.5 && transform.position.y >= -2.25))
 			{
-				playerCollider.enabled = true;
-			}
+                playerCollider.enabled = true;
+            }
 			else
 			{
 				playerCollider.enabled = false;
@@ -170,48 +173,48 @@ public class PlayerMovement : MonoBehaviour {
 	{
 		if (charPosition != positionToMoveTo)
 		{
-			// if theres an encounter
-			if (Random.Range(0f, 100f) < ENCOUNTER_CHANCE)
+			// start moving
+			switch (moveDirection)
 			{
-				// change the view to the battle view and enable
-				// the HUD
-				//enterBattle();
-				if(PlayerPrefs.HasKey("notfirstBattle"))
-				{
-					enterBattle();
-				}
-				else
-				{
-					firstBattleScreen.SetActive(true);
-					PlayerPrefs.SetInt("notfirstBattle", 1);
-				}
+				case Direction.North:
+					charPosition.y += moveIncrement;
+					break;
+				case Direction.South:
+					charPosition.y -= moveIncrement;
+					break;
+				case Direction.East:
+					charPosition.x -= moveIncrement;
+					break;
+				case Direction.West:
+					charPosition.x += moveIncrement;
+					break;
 			}
-			// otherwise, set where the player is going to move to,
-			// and start moving there
-			else
+			transform.position = charPosition;
+			// if we are at the destination spot
+			if (charPosition == positionToMoveTo)
 			{
-				switch (moveDirection)
+				// stop moving
+				CancelInvoke("movePlayer");
+
+				// check for an encounter
+				if (Random.Range(0f, 100f) < ENCOUNTER_CHANCE)
 				{
-					case Direction.North:
-						charPosition.y += moveIncrement;
-						break;
-					case Direction.South:
-						charPosition.y -= moveIncrement;
-						break;
-					case Direction.East:
-						charPosition.x -= moveIncrement;
-						break;
-					case Direction.West:
-						charPosition.x += moveIncrement;
-						break;
+					if (PlayerPrefs.HasKey("notfirstBattle") &&
+						!(transform.position.x <= -24.5 && transform.position.x >= -25.25
+						&& transform.position.y <= -1.5 && transform.position.y >= -2.25))
+					{
+						enterBattle();
+					}
+					else if (!PlayerPrefs.HasKey("notfirstBattle"))
+					{
+						firstBattleScreen.SetActive(true);
+						PlayerPrefs.SetInt("notfirstBattle", 1);
+					}
 				}
-				transform.position = charPosition;
-				if (charPosition == positionToMoveTo)
-				{
-					CancelInvoke("movePlayer");
-					// sets isMoving to false
-					Invoke("canMoveAgain", WAIT_INTERVAL);
-				}
+
+				// sets isMoving to false and allows player to 
+				//   move in WAIT_INTERVAL time
+				Invoke("canMoveAgain", WAIT_INTERVAL);
 			}
 		}
 		else {
@@ -219,13 +222,7 @@ public class PlayerMovement : MonoBehaviour {
 			Invoke("canMoveAgain", WAIT_INTERVAL);
 		}
 	}
-
-	public void stopMoving()
-	{
-		CancelInvoke("movePlayer");
-		isMoving = false;
-	}
-
+    
     private void canMoveAgain()
     {
         isMoving = false;
@@ -236,7 +233,7 @@ public class PlayerMovement : MonoBehaviour {
 		arrowDirections.SetActive(false);
 		arrows.SetActive(false);
 	}
-
+    
 	public void letsGoButtonAction()
 	{
 		firstPlayScreen.SetActive(false);
