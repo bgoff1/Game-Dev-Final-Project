@@ -207,6 +207,7 @@ public class PlayerMovement : MonoBehaviour {
 					}
 					else if (!PlayerPrefs.HasKey("notfirstBattle"))
 					{
+						canMove = false;
 						firstBattleScreen.SetActive(true);
 						PlayerPrefs.SetInt("notfirstBattle", 1);
 					}
