@@ -511,8 +511,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PROTECTS YOU FROM AN ENEMY STRIKE. NEITHER YOU NOR THE ENEMY TAKE DAMAGE.
-    CAN ONLY BE USED EVERY TWO TURNS.
+  m_Text: 'WHEN YOUR HEALTH REACHES 0, YOU DIE AND LOSE THE GAME. '
 --- !u!222 &639768389
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -734,8 +733,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOUR EXPERIENCE GOES UP WHEN YOU DEFEAT AN ENEMY. WHEN IT REACHES 100, YOU
-    LEVEL UP.
+  m_Text: YOUR EXPERIENCE GOES UP WHEN YOU DEFEAT AN ENEMY. WHEN IT FILLS UP COMPLETELY,
+    YOU LEVEL UP.
 --- !u!222 &901293045
 CanvasRenderer:
   m_ObjectHideFlags: 0
