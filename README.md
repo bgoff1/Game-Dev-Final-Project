@@ -4,7 +4,8 @@ Final Project for COMP 475 Game Development
 Project vastly expounded upon a Java game found here : 
 https://www.reddit.com/r/learnprogramming/comments/5quy41/i_created_a_very_simple_textbased_java_gamesingle/?st=jf8otknq&sh=07fe80ca.
 
-	changed due to adding a map and movement and a UI for combat, as well as buttons to press and various, more interesting abilities.
+	changed due to adding a map and movement and a UI for combat, 
+	as well as buttons to press and various, more interesting abilities.
 	
 
 Includes a player to move throughout a cave by fighting enemies
